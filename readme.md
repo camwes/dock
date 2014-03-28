@@ -3,32 +3,37 @@ A developer is only as good as his/her environment. In order to be the most prod
 #### GUI v. CLI
 This is not to say that the best development environment doesn't use any GUIs. Many services provide excellent GUIs which provide additional benefits and advanced features. Many developers (myself included) prefer to use non-CLI text editors (textmate, webstorm, textwrangler and coda seem to be most popular). Other developers use the Github GUI, which is capable of executing most of the available git commands. To each it's own, but when making the decision between using a GUI or CLI, consider carefully how much control you will need.
 
-#### Customize Your Shell
+===
+```sh
+./dev_env.sh
+```
+To make lives easier, the above command will do everything that you need to get your development environment from zero to supercharged in ~20-30 mins. Here's what the script does:
+
+1. Customize your shell
+2. Install packages via Homebrew
+3. Install apps via Cask
+4. Install additional dependencies
+
+## 1. Customize Your Shell
 Most linux machines use bash as the default shell, and if you've been using linux long enough it's likely that you have amassed an impressively large .bashrc (or .zshrc if you like me prefer the zsh shell) filled with aliases and enhancements to your shell environment. If you don't know what a .bashrc is then you should take the time to research how these files work and how they can make your life a lot easier. I would suggest perusing this:
 ##### [sample .zshrc](http://tldp.org/LDP/abs/html/sample-bashrc.html)
-#### Install Homebrew
-If you are configuring a development environment for your local machine you must install Homebrew, and it will do a lot of heavy lifting for you. Homebrew is a package managers for Mac OSX; it can install command line packages and applications and manage these installations.
-
-Essential packages
+## 2. Install Packages via Homebrew
+If you are configuring a development environment for a mac then you must install Homebrew, and it will do a lot of heavy lifting for you. If you use a window's machine then go out and buy a Mac (but seriously). Homebrew is a package managers for Mac OSX; it can install command line packages and applications and manage these installations. Homebrew has tons of [packages available](https://github.com/Homebrew/homebrew/tree/master/Library/Formula) and this repo installs a select view. They are listed in the [BrewFile](dotfiles/Brewfile). My favorite formulas are:
 * git (duh)
 * emacs (or your favorite command line text editor)
-
-Other useful brews:
 * autojump
-* geeqie
-* imagesnap
-* imagemagick
 * tree
 * tig
 * wget
 * htop
 * mosh
-* s3cmd
-* s3fs
-* nginx
 * zsh
 
-#### Install Ruby
+## 3. Install Apps via Cask
+Even better, brew can also install your GUI apps using brew cask. Many apps are added everyday so check out what's available [here](https://github.com/phinze/homebrew-cask/tree/master/Casks) or check out the casks installed with [this repo](dotfiles/.cask).
+
+## 4. Install Additional Dependencies
+#### Install Ruby (rubygems)
 Mac comes with Ruby installed. Nothing to do here... Yay! But you will need to install some important rubygems:
 
 * [Sass](http://sass-lang.com/) is a css preprocessor 
@@ -39,18 +44,8 @@ Mac comes with Ruby installed. Nothing to do here... Yay! But you will need to i
 ```sh
 gem install sass compass cheat ceaser-easing
 ```
-
-#### Install Node
-Installing and running node is a fairly straightforward process. Depending on what you're building you may require a specific version of Node.js, but this tutorial assumes you're fine with using the latest version.
-
-```sh
-brew install node
-# pat yourself on the back and grab a coffee
-```
-If you use a window's machine then go out and buy a Mac (but seriously).
-
-#### Install Node Modules
-As previously stated, Node has a great deal of modules that are easily downloaded using npm. While each web project should have it's own packages.json for installing dependencies there are a few modules that you will need to install globally:
+#### Install Global Node Modules
+Node has a great deal of modules that are easily downloaded using npm. While each web project should have it's own packages.json for installing dependencies there are a few modules that you will need to install globally:
 
 * [coffee-script](http://coffeescript.org/): Javascript pre-processor
 * [forever](https://github.com/nodejitsu/forever): A simple CLI tool for ensuring that a given script runs continuously (i.e. forever)
