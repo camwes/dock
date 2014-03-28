@@ -1,8 +1,8 @@
 #! /bin/sh
-# /etc/init.d/boilerplate
+# /etc/init.d/ohm
 # update these paths so that the script works correctly
-NAME=boilerplate.js
-SITEROOT=/home/git/production
+NAME=ohm
+SITEROOT=/home/git/public/production
 GHOST=/home/git/ghost
 grunt=/usr/bin/grunt
 gem=/usr/bin/gem
@@ -46,7 +46,7 @@ case "$1" in
     $forever list
     ;;
   *)
-    echo "Usage: /etc/init.d/boilerplate {start|stop|list|reload|install}"
+    echo "Usage: /etc/init.d/ohm {start|stop|list|reload|install}"
     exit 1
     ;;
 esac
