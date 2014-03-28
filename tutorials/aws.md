@@ -1,6 +1,5 @@
 # Guide to Amazon Web Services
-#### Series: [Frontend Designer Boilerplate](readme.md)
-# Contents
+### Contents
 1. Configuration
  * [Launch Server](#launch-server)
  * [Configure Ports](#configure-ports)
@@ -20,9 +19,6 @@
  *  Cloud Watch
  *  Google Analytics
  
-# Abstract
-This guide is designed to help a completely novice developer set up Amazon Web Services to host their site.
-
 # Before you get Started
 There are a few steps that obviously need to be done that I'm not going to get into for brevity's sake but should be very simple to figure out:
 
