@@ -1,10 +1,11 @@
+# FIXME: update this automatically based on the project
 upstream ghost_upstream {
 	server 127.0.0.1:2368;
 	keepalive 64;
 }
 server {
 	listen 81;
-	server_name ghost.drake.fm labs.ohm.fm;
+	server_name ghost.boilerplate.fm;
 	location / {
 		proxy_pass http://ghost_upstream;
 		proxy_http_version 1.1;

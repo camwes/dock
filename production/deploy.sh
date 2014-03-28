@@ -7,7 +7,8 @@ WORK_TREE=/home/git/public/production
 sudo mkdir -p $GIT && cd $GIT
 $git --bare init
 function setUp() {
-  git --bare fetch git@github.com:ohmlabs/boilerplate.git master:master # FIXME: update name
+  # FIXME: get repo url from project
+  git --bare fetch git@github.com:ohmlabs/boilerplate.git master:master
   sudo cp -i $FILE_DIR/hooks/pre-receive.sh $GIT/hooks/pre-receive
   sudo cp -i $FILE_DIR/hooks/post-receive.sh $GIT/hooks/post-receive
   sudo chmod +x $GIT/hooks/pre-receive

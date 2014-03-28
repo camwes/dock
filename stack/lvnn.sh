@@ -29,14 +29,6 @@ sudo apt-get install -y nodejs
 # https://npmjs.org/ cache clean just in case
 sudo npm cache clean
 sudo npm install -g bower grunt-cli forever coffee-script node-inspector
-read -p "Node Install Complete, Do you want to install Ghost? [Y/n]" -n 1
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-        cd $FILE_DIR
-        sudo ./ghost.sh
-elif [[ $REPLY =~ ^[Nn]$ ]]; then
-        echo "install complete"
-fi
 ###################
 # Install Varnish via https://www.varnish-cache.org/installation/ubuntu
 ###################
@@ -46,5 +38,16 @@ sudo apt-get update
 sudo apt-get install -y varnish
 sudo patch /etc/default/varnish < $FILE_DIR/varnish.diff
 sudo patch /etc/varnish/default.vcl < $FILE_DIR/default.vcl.diff
+# Stop Varnish and Nginx for Ghost installation
+sudo service nginx stop
+sudo service varnish stop
+read -p "Node Install Complete, Do you want to install Ghost? [Y/n]" -n 1
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+        cd $FILE_DIR
+        sudo ./ghost.sh
+elif [[ $REPLY =~ ^[Nn]$ ]]; then
+        echo "install complete"
+fi
 sudo service nginx start
 sudo service varnish start

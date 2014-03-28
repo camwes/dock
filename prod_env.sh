@@ -16,6 +16,11 @@ sudo apt-get upgrade --show-upgraded
 # Install
 ###################
 sudo apt-get install -y emacs htop tree git tig wget tmux rubygems unzip ntp fail2ban zsh
+# Install hub for git
+git clone https://github.com/github/hub.git
+cd hub
+sudo rake install prefix=/usr/local
+cd -
 # Install Mosh
 sudo apt-get install -y python-software-properties
 sudo add-apt-repository -y ppa:keithw/mosh
@@ -47,6 +52,11 @@ fi
 # Fail2Ban
 ###################
 sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
+###################
+# Dotfiles
+###################
+rsync --exclude ".git/" --exclude ".DS_Store" --exclude "bootstrap.sh" --exclude "README.md" -av --no-perms $FILE_DIR/dotfiles ~
+# FIXME: same as .bootstrap.sh
 ###################
 # Deploy Key
 ###################
