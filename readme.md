@@ -1,12 +1,13 @@
-Development Environment
+[Development Environment](development-environment)
  1. [Customize Your Shell](#1-customize-your-shell)
  2. [Install Packages](#2-install-packages-via-homebrew)
  3. [Install Apps](#3-install-apps-via-cask)
  4. [Install Dependencies](#4-install-additional-dependencies)
-Production Environment
- * Amazon Web Services(#aws-guide)
- * [Nitty Gritty Install Guide](tutorials/nittygritty.md)
+
+[Production Environment](#production-environment)
+ * [Amazon Web Services](#aws-guide)
  * [Deploying with Github](#deploying-using-github)
+ * [Server Structure](#server-structure)
  
 # Development Environment
 A developer is only as good as his/her environment. In order to be the most productive developer possible you must start by using the correct tools. When I first learned how to build websites I preferred an IDE (Adobe Dreamweaver) as my primary editor because it provided the most out-the-box functionality. I soon found my development needs outgrew Dreamweaver and eventually realized that there really is no GUI out there that is going to give you the control that you get by using command line tools. So, I started off down the path to learning linux. In order to build an efficient development environment intermediate knowledge of Linux is a sine qua non.
@@ -78,14 +79,9 @@ As a developer I began making websites with zero server administration experienc
 
 There are many services that are offered by AWS, but the most important is Elastic Compute Cloud (EC2) which allows users to create their own virtual servers which are partitioned from Amazon's data servers. As a result these are some of the fastest and most reliable servers you can use. Other crucial services that you will probably use are S3 (a storage service), Route 53 (A DNS management service) and Cloudfront (a CDN). You need only use Route 53 and EC2 to get started, but I recommend becoming very familiar with these four services and the many other products that AWS offers. A basic knowledge of Unix, [SSH](tutorials/ssh.md), and DNS is requisite to follow along with my [guide to aws](tutorials/aws.md).
 
-### [Nitty Gritty Installation Guide](tutorials/nittygritty.md)
-Once you have a server set up what are the next steps? In the past the next steps were pretty straightforward and hardly disputable: Install and configure the typical LAMP stack technologies: PHP, MySQL and Apache. Most often, if you are a front-end developer you may not be very comfortable with learning a server side language like php or python. If this is the case you should be very excited about a new technology called Node.js If you have no idea what Node is, it is essentially Javascript for the server side. Your eyes probably light up at the idea alone, since JS has certainly become the default scripting language of the web. Most importantly, many beginners have experience with javascript, giving them the opportunity to expand their development to the server side.
-
 ### [Deploying using Github](tutorials/deploy.md)
 
-But getting the server set up isn't the end of server deployment. Since you are already clearly an expert at Git by now why not use git to improve your server deployment process? Git is actually an excellent tool for this, but requires a slightly more advanced usage of git and understanding of shell scripts. Follow the [guide](tutorials/deploy.md) if you're brave enough.
-
-===
+But getting the server set up isn't the end of server deployment. Since you are already clearly an expert at Git by now why not use git to improve your server deployment process? Git is actually an excellent tool for this, but requires a slightly more advanced usage of git and understanding of shell scripts. Follow the [guide](tutorials/deploy.md).
 ```sh
 ./prod_env.sh
 ```
@@ -104,6 +100,8 @@ Similar to the development script above, this script is designed to build a prod
 * Create Git Repositories for Deployment
   * staging
   * prod
+
+For more details on exactly what this script does, please refer to the [nitty-gritty installation guide](tutorials/nittygritty.md)
 
 #### Notes:
 * environment: Ubuntu 12.04 Server:
@@ -137,3 +135,4 @@ When you have completed installation you should have the following architecture 
 ### [SSH Guide](tutorials/ssh.md)
 ### [AWS Guide](tutorials/aws.md)
 ### [Deploying using Github](tutorials/deploy.md)
+### [Nitty-Gritty Installation Guide](tutorials/nittygritty.md)
