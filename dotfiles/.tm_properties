@@ -1,0 +1,8 @@
+include = "{$include,.*}"
+exclude = "{$exclude,.git,.DS_Store,.sass-cache,node_modules}"
+
+softTabs         = true
+tabSize          = 2
+
+[ text ]
+showInvisibles   = true
