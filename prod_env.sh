@@ -62,6 +62,7 @@ sudo cat /root/.ssh/id_rsa.pub
 # Git Deployment
 ###################
 sudo ./production/deploy.sh
+# FIXME: add staging
 # Install hub for git
 git clone https://github.com/github/hub.git
 cd hub

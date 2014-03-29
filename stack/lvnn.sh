@@ -2,7 +2,7 @@
 FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 NGINX_DIR=/etc/nginx
 ###################
-# Install Nginx 
+# TODO: Install Nginx from source
 ###################
 # Install nginx from source for socket.io
 # wget http://nginx.org/download/nginx-1.4.3.tar.gz
