@@ -1,4 +1,4 @@
-[Development Environment](development-environment)
+[Development Environment](#development-environment)
  1. [Customize Your Shell](#1-customize-your-shell)
  2. [Install Packages](#2-install-packages-via-homebrew)
  3. [Install Apps](#3-install-apps-via-cask)
