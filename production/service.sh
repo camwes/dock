@@ -1,7 +1,6 @@
 #! /bin/sh
 # /etc/init.d/ohm
-# update these paths so that the script works correctly
-NAME=ohm
+NAME=boilerplate.js # FIXME: update these paths so that the script works correctly
 SITEROOT=/home/git/public/production
 GHOST=/home/git/ghost
 grunt=/usr/bin/grunt

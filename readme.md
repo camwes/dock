@@ -106,7 +106,6 @@ For more details on exactly what this script does, please refer to the [nitty-gr
 #### Notes:
 * environment: Ubuntu 12.04 Server:
 * the prompt requires manually selecting the timezone
-* MySql secure install requires answering a prompt
 * Adding Deploy Keys to github requires copying ssh key
 
 ## Server Structure

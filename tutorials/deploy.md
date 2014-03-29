@@ -20,10 +20,10 @@ In order to use hooks, you will have to set up a git remote repository on the se
 ```sh
 # on yo machine
 mkdir ~/git
-mkdir ~/git/boilerplate.git && cd ~/git/boilerplate.git
+mkdir -p ~/git/production.git && cd ~/git/production.git
 git —-bare init
 # if you want to reference a repository on github
-git --bare fetch git@github.com:username/boilerplate.git prod:prod
+git --bare fetch git@github.com:ohmlabs/boilerplate.git prod:prod
 
 # update /etc/init.d/boilerplate with service commands
 # install hooks in ~/git/boilerplate.git/hooks
@@ -46,15 +46,15 @@ You may have guessed that this script executes once your files have been updated
 ```sh
 #!/bin/sh
 echo "Checkout Updates"
-GIT_WORK_TREE=/var/www/boilerplate git checkout -f
+GIT_WORK_TREE=/home/git/public/production git checkout -f
 echo "start boilerplate server"
 service boilerplate start
 ```
 finally change the permissions on these
 
 ```sh
-chmod +x /git/boilerplate.git/hooks/pre-receive
-chmod +x /git/boilerplate.git/hooks/post-receive
+chmod +x /git/production.git/hooks/pre-receive
+chmod +x /git/production.git/hooks/post-receive
 ```
 # Create Service in Linux
 As you can see I did not write a lot for my hooks to do, so how will I accomplish all of the stuff that needs to be done to restart my app? In case you missed it about I actually called a System V init script. These are scripts that are executed in as "predicatable an environment as possible". You call them very simply with the "sudo service boilerplate stop" and if you've been programming Linux for any period of time you are probably very familiar with it. To create one, you will want to create a file like this in /etc/init.d/
@@ -68,7 +68,7 @@ NAME=Boilerplate
 grunt=/usr/bin/grunt
 forever=/usr/bin/forever
 npm=/usr/bin/npm
-SITEROOT=/var/www/boilerplate.fm    # or some bs like that 
+SITEROOT=/home/git/public/production    # or some bs like that
 export PATH=$PATH:/usr/local/bin/
 
 case "$1" in
@@ -103,12 +103,10 @@ exit 0
 Finally, don’t forget to add a ref to your local repository for this new git server. You can directly edit .git/config to add the remote server to the refs (which I prefer), Or use commands:
 ```sh
 # add new remote ref to repository
-git remote add production ssh://00.00.00.00/home/ubuntu/boilerplate.git
+git remote add prod ubuntu@ec2-00-000-000-00.compute-1.amazonaws.com:/home/git/production.git
 ```
 To push to the remote you created:
 ```sh
-git push production      # or whatever you named in last step
+git push prod
 ```
-
-
 

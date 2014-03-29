@@ -4,8 +4,8 @@ upstream boilerplate_upstream {
 	keepalive 64;
 }
 server {
-	listen 81;
-	server_name *;
+	listen 81 default_server;
+	server_name *.ohm.fm;
 	root /home/git/public/production/static;
 	location ~ ^/(images/|components/|img/|javascript/|js/|css/|343.ttf|gcal.html|stylesheets/|media/|static/|robots.txt|humans.txt) {
 	  access_log off;

@@ -6,6 +6,8 @@ FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 sudo adduser --disabled-password --gecos "" git
 sudo usermod -a -G sudo git
 sudo chmod a+rx /home/git
+sudo mkdir -p /home/git/.ssh/
+sudo cp -i /home/ubuntu/.ssh/authorized_keys /home/git/.ssh/authorized_keys
 # Configure Time Zone 
 sudo dpkg-reconfigure tzdata
 sudo ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
@@ -16,11 +18,6 @@ sudo apt-get upgrade --show-upgraded
 # Install
 ###################
 sudo apt-get install -y emacs htop tree git tig wget tmux rubygems unzip ntp fail2ban zsh
-# Install hub for git
-git clone https://github.com/github/hub.git
-cd hub
-sudo rake install prefix=/usr/local
-cd -
 # Install Mosh
 sudo apt-get install -y python-software-properties
 sudo add-apt-repository -y ppa:keithw/mosh
@@ -55,8 +52,7 @@ sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 ###################
 # Dotfiles
 ###################
-rsync --exclude ".git/" --exclude ".DS_Store" --exclude "bootstrap.sh" --exclude "README.md" -av --no-perms $FILE_DIR/dotfiles ~
-# FIXME: same as .bootstrap.sh
+sudo ./dotfiles/bootstrap.sh
 ###################
 # Deploy Key
 ###################
@@ -65,13 +61,12 @@ sudo cat /root/.ssh/id_rsa.pub
 ###################
 # Git Deployment
 ###################
-read -p "Server Initialized, Do you want to create a git repo for deployment? [Y/n]" -n 1
-echo
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-        sudo ./production/deploy.sh
-elif [[ $REPLY =~ ^[Nn]$ ]]; then
-        echo "continuing..."
-fi
+sudo ./production/deploy.sh
+# Install hub for git
+git clone https://github.com/github/hub.git
+cd hub
+sudo rake install prefix=/usr/local
+cd -
 echo "Successfully Installed the following:"
 node -v
 npm ls -g --depth=0
