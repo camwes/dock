@@ -88,7 +88,7 @@ But getting the server set up isn't the end of server deployment. Since you are 
 Similar to the development script above, this script is designed to build a production environment for you. This script does many things, including but not limited to:
 * Create Users
 * Set Time Zone & Clock
-* Install Dependencies
+* [Install Dependencies](tutorials/nittygritty.md)
   * Apache2/Nginx
   * Mysql
   * Node
@@ -122,16 +122,10 @@ When you have completed installation you should have the following architecture 
 │   │   └── pre-receive
 └── public
     ├── production
-    │   ├── backup
-    │   ├── log
-    │   └── public
     └── staging
-        ├── backup
-        ├── log
-        └── public
 ```
 # References
-### [SSH Guide](tutorials/ssh.md)
-### [AWS Guide](tutorials/aws.md)
-### [Deploying using Github](tutorials/deploy.md)
-### [Nitty-Gritty Installation Guide](tutorials/nittygritty.md)
+#### [SSH Guide](tutorials/ssh.md)
+#### [AWS Guide](tutorials/aws.md)
+#### [Deploying using Github](tutorials/deploy.md)
+#### [Nitty-Gritty Installation Guide](tutorials/nittygritty.md)
