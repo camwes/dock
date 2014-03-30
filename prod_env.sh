@@ -32,13 +32,7 @@ sudo gem install sass compass ceaser-easing compass-normalize bundle
 ###################
 # Stack
 ###################
-read -p "Ready to build environment. Would you like to use LVNN(N) or LAMP(A)? [N/A]" -n 1
-echo
-if [[ $REPLY =~ ^[Aa]$ ]]; then
-  sudo ./stack/lamp.sh
-elif [[ $REPLY =~ ^[Nn]$ ]]; then
-  sudo ./stack/lvnn.sh
-fi
+sudo ./stack/core.sh
 ###################
 # TODO: Firewall
 ###################
