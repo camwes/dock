@@ -1,7 +1,7 @@
 #! /bin/sh
-# /etc/init.d/ohm
-NAME=Ohm
-SITEROOT=/home/git/public/production
+# /etc/init.d/ohmstage
+NAME=Staging
+SITEROOT=/home/git/public/staging
 #############
 # TODO: set these variables based on successful version outputs and warn if any dependency is missing
 #############
@@ -19,7 +19,7 @@ case "$1" in
     echo "Starting $NAME"
     cd $SITEROOT
     pwd
-    $grunt prod
+    $grunt
     $grunt forever:start
     ;;
   stop)
@@ -31,7 +31,7 @@ case "$1" in
   reload)
     echo "Compiling $NAME"
     cd $SITEROOT
-    $grunt prod
+    $grunt
     $grunt forever:restart
 
     ;;
@@ -50,7 +50,7 @@ case "$1" in
     $forever list
     ;;
   *)
-    echo "Usage: /etc/init.d/ohm {start|stop|list|reload|install}"
+    echo "Usage: /etc/init.d/ohmstage {start|stop|list|reload|install}"
     exit 1
     ;;
 esac

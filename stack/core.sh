@@ -2,18 +2,16 @@
 FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 NGINX_DIR=/etc/nginx
 ###################
-# TODO: Install Nginx from source
+# Install Nginx
 ###################
+sudo apt-get install -y nginx
 # Install nginx from source for socket.io
-# wget http://nginx.org/download/nginx-1.4.3.tar.gz
-# tar xvzf (.tgz or tar.gz)
-# tar xvjf (.tbz or .tar.bz2)
-# tar xvf (.tar)
+# wget http://nginx.org/download/nginx-1.4.3.tar.gz 
+# tar xvzf nginx-1.4.3.tar.gz 
 # ./configure
 # make
 # sudo make install
 # sudo ln -s /sbin/nginx /usr/sbin
-sudo apt-get install -y nginx
 sudo mv $NGINX_DIR/nginx.conf $NGINX_DIR/nginx.conf.backup
 sudo cp -i $FILE_DIR/nginx.conf $NGINX_DIR
 sudo mv $NGINX_DIR/sites-enabled $NGINX_DIR/sites-enabled.backup
