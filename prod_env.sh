@@ -75,14 +75,14 @@ sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 ###################
 # change the default shell for git user
 sudo chsh -s /usr/bin/zsh git
-# change permissions on the home dir
-sudo chmod a+rx /home/git
 # move the AWS authorized key to the git account
 sudo mkdir -p /home/git/.ssh/
 sudo cp -i /home/ubuntu/.ssh/authorized_keys /home/git/.ssh/authorized_keys
-sudo chown git:git /home/git/.ssh/authorized_keys
 # sync dotfiles
 sudo rsync --exclude ".git/"  --exclude ".osx"  --exclude "Brewfile"  --exclude ".cask" --exclude ".DS_Store" --exclude "bootstrap.sh" --exclude "README.md" -av --no-perms $FILE_DIR/dotfiles/ /home/git
+# change permissions on the home dir
+sudo chmod a+rx /home/git
+sudo chown -R git:git /home/git/
 sudo source /home/git/.zshrc
 echo "Successfully Installed the following:"
 node -v
