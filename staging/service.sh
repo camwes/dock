@@ -20,19 +20,18 @@ case "$1" in
     cd $SITEROOT
     pwd
     $grunt
-    $grunt forever:start
+    $forever start boilerplate.js
     ;;
   stop)
     echo "Stopping script $NAME"
     cd $SITEROOT
-    $grunt forever:stop
-
+    $forever stop boilerplate.js
     ;;
   reload)
     echo "Compiling $NAME"
     cd $SITEROOT
     $grunt
-    $grunt forever:restart
+    $forever restart boilerplate.js
 
     ;;
   install)
@@ -40,7 +39,7 @@ case "$1" in
     cd $SITEROOT
     sudo $npm cache clean
     sudo $npm install
-    patch $SITEROOT/node_modules/socket.io/lib/ < $SITEROOT/server/stack/socketio.patch
+    # patch $SITEROOT/node_modules/socket.io/lib/ < $SITEROOT/server/stack/socketio.patch
     sudo $bower install --allow-root
     # slc strongops
 

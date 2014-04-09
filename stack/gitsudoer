@@ -1,0 +1,2 @@
+# passwordless sudo functionality.
+git ALL=(ALL) NOPASSWD:ALL
