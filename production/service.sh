@@ -1,6 +1,6 @@
 #! /bin/sh
 # /etc/init.d/ohm
-NAME=Ohm
+NAME=ohm
 SITEROOT=/home/git/public/production
 #############
 # TODO: set these variables based on successful version outputs and warn if any dependency is missing
@@ -20,19 +20,19 @@ case "$1" in
     cd $SITEROOT
     pwd
     $grunt prod
-    $forever start boilerplate.js -p
+    $forever start ohm.js -p
     ;;
   stop)
     echo "Stopping script $NAME"
     cd $SITEROOT
-    $forever stop boilerplate.js -p
+    $forever stop ohm.js -p
 
     ;;
   reload)
     echo "Compiling $NAME"
     cd $SITEROOT
     $grunt prod
-    $forever restart boilerplate.js -p
+    $forever restart ohm.js -p
 
     ;;
   install)
@@ -40,9 +40,11 @@ case "$1" in
     cd $SITEROOT
     sudo $npm cache clean
     sudo $npm install
-    # patch $SITEROOT/node_modules/socket.io/lib/ < $SITEROOT/server/stack/socketio.patch
     sudo $bower install --allow-root
-    # slc strongops
+    # patch Socket.io per https://github.com/audreyt/socket.io/commit/a5b52431ea4be22a1864e10a6d629180685bbb71
+    # sudo patch $SITEROOT/node_modules/socket.io/lib/manager.js < /home/ubuntu/environment/stack/socketio.patch
+    cd $SITEROOT/ghost
+    sudo $npm install --production
 
     ;;
   list)

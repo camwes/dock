@@ -1,6 +1,6 @@
 #! /bin/sh
 # /etc/init.d/ohmstage
-NAME=Staging
+NAME=ohmstage
 SITEROOT=/home/git/public/staging
 #############
 # TODO: set these variables based on successful version outputs and warn if any dependency is missing
@@ -20,18 +20,18 @@ case "$1" in
     cd $SITEROOT
     pwd
     $grunt
-    $forever start boilerplate.js
+    $forever start ohm.js
     ;;
   stop)
     echo "Stopping script $NAME"
     cd $SITEROOT
-    $forever stop boilerplate.js
+    $forever stop ohm.js
     ;;
   reload)
     echo "Compiling $NAME"
     cd $SITEROOT
     $grunt
-    $forever restart boilerplate.js
+    $forever restart ohm.js
 
     ;;
   install)
