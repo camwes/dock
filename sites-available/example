@@ -11,7 +11,7 @@ upstream cms_upstream {
 server {
         # listen on port 81
         listen 81;
-        server_name example.com example.net;
+        server_name example.ohm.fm *.ohm.fm;
         root /home/git/public/production/static;
         # Use Nginx to serve static files
         location ~ ^/(images/|components/|plato/|img/|javascript/|js/|css/|pdfs/|media/|static/|robots.txt|humans.txt|maps) {
