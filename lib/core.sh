@@ -23,7 +23,7 @@ sudo apt-get install -y nginx
 sudo mv $NGINX_DIR/nginx.conf $NGINX_DIR/nginx.conf.backup
 sudo cp -i $FILE_DIR/nginx.conf $NGINX_DIR
 sudo mv $NGINX_DIR/sites-enabled $NGINX_DIR/sites-enabled.backup
-sudo cp -ir $FILE_DIR/sites-available/ $NGINX_DIR/sites-enabled
+sudo cp -ir $FILE_DIR/../sites-available/ $NGINX_DIR/sites-enabled
 ###################
 # Install Node Stable
 ###################
