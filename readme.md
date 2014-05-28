@@ -1,14 +1,3 @@
-[Development Environment](#development-environment)
- 1. [Customize Your Shell](#1-customize-your-shell)
- 2. [Install Packages](#2-install-packages-via-homebrew)
- 3. [Install Apps](#3-install-apps-via-cask)
- 4. [Install Dependencies](#4-install-additional-dependencies)
-
-[Production Environment](#production-environment)
- * [Amazon Web Services](#aws-guide)
- * [Deploying with Github](#deploying-using-github)
- * [Server Structure](#server-structure)
- 
 # Development Environment
 A developer is only as good as his/her environment. In order to be the most productive developer possible you must start by using the correct tools. When I first learned how to build websites I preferred an IDE (Adobe Dreamweaver) as my primary editor because it provided the most out-the-box functionality. I soon found my development needs outgrew Dreamweaver and eventually realized that there really is no GUI out there that is going to give you the control that you get by using command line tools. So, I started off down the path to learning linux. In order to build an efficient development environment intermediate knowledge of Linux is a sine qua non.
 #### GUI v. CLI
@@ -69,26 +58,19 @@ npm install # install all modules in package.json
 npm install -g node-inspector bower forever grunt-cli coffee-script
 ```
 You may also want to consider [yeomon](http://yeoman.io/), an application generator. This service installs works with bower and grunt but adds the benefit of basically doing what I've done in this repo and providing you with biased app structures (generators) to choose from. In due, time I will create my own Yeoman generator for this boilerplate.
+
 #### Install LiveReload
 If you've developed for a while you probably hate the process of constantly refreshing your browser once pages have been updated. This is a thing of the past with [LiveReload](http://livereload.com/). Install their app or  browser extensions. The [gruntfile.coffee](https://github.com/cdrake757/boilerplate/blob/master/gruntfile.coffee) has already been updated to enable livereload when changes are made to the static directory when you "grunt watch".
 
-# Production Environment
+# Production Deployment
 As a developer I began making websites with zero server administration experience. I used commercial web hosting services that were both terribly interfaced and extremely limited (GoDaddy, Yahoo, etc.) As the sophistication of the things that I decided to build began to outgrow these services I decided that it was worth my time to learn to deploy a site using Amazon Web Services. Many of the webs most successful companies (Netflix, Tumblr, etc.) and most startups heavily rely on AWS, as it is very competitively priced. Unfortunately, for most front-end developers, learning to use these services is a daunting task.
-
-### [AWS Guide](tutorials/aws.md)
-
-There are many services that are offered by AWS, but the most important is Elastic Compute Cloud (EC2) which allows users to create their own virtual servers which are partitioned from Amazon's data servers. As a result these are some of the fastest and most reliable servers you can use. Other crucial services that you will probably use are S3 (a storage service), Route 53 (A DNS management service) and Cloudfront (a CDN). You need only use Route 53 and EC2 to get started, but I recommend becoming very familiar with these four services and the many other products that AWS offers. A basic knowledge of Unix, [SSH](tutorials/ssh.md), and DNS is requisite to follow along with my [guide to aws](tutorials/aws.md).
-
-### [Deploying using Github](tutorials/deploy.md)
-
-But getting the server set up isn't the end of server deployment. Since you are already clearly an expert at Git by now why not use git to improve your server deployment process? Git is actually an excellent tool for this, but requires a slightly more advanced usage of git and understanding of shell scripts. Follow the [guide](tutorials/deploy.md).
 ```sh
 ./prod_env.sh
 ```
 Similar to the development script above, this script is designed to build a production environment for you. This script does many things, including but not limited to:
 * Create Users
 * Set Time Zone & Clock
-* [Install Dependencies](tutorials/nittygritty.md)
+* Install Dependencies
   * Apache2/Nginx
   * Mysql
   * Node
@@ -101,16 +83,23 @@ Similar to the development script above, this script is designed to build a prod
   * staging
   * prod
 
-For more details on exactly what this script does, please refer to the [nitty-gritty installation guide](tutorials/nittygritty.md)
+For more details on exactly what this script does, please refer to the [aws guide](http://labs.ohm.fm/aws/)
 
 #### Notes:
 * environment: Ubuntu 12.04 Server:
 * the prompt requires manually selecting the timezone
 * Adding Deploy Keys to github requires copying ssh key
 
+## [AWS Guide](http://labs.ohm.fm/aws/)
+
+There are many services that are offered by AWS, but the most important is Elastic Compute Cloud (EC2) which allows users to create their own virtual servers which are partitioned from Amazon's data servers. As a result these are some of the fastest and most reliable servers you can use. Other crucial services that you will probably use are S3 (a storage service), Route 53 (A DNS management service) and Cloudfront (a CDN). You need only use Route 53 and EC2 to get started, but I recommend becoming very familiar with these four services and the many other products that AWS offers. A basic knowledge of Unix, [SSH](http://labs.ohm.fm/ssh/), and DNS is requisite to follow along with my [guide to aws](http://labs.ohm.fm/aws/).
+
+## [Deploying with Github](http://labs.ohm.fm/git-part-ii/)
+
+But getting the server set up isn't the end of server deployment. Since you are already clearly an expert at Git by now why not use git to improve your server deployment process? Git is actually an excellent tool for this, but requires a slightly more advanced usage of git and understanding of shell scripts. Follow the [guide](http://labs.ohm.fm/git-part-ii/).
+
 ## Server Structure
 When you have completed installation you should have the following architecture in /home/git:
-
 ```
 ├── staging.git
 │   ├── hooks
@@ -125,7 +114,17 @@ When you have completed installation you should have the following architecture 
     └── staging
 ```
 # References
-#### [SSH Guide](tutorials/ssh.md)
-#### [AWS Guide](tutorials/aws.md)
-#### [Deploying using Github](tutorials/deploy.md)
-#### [Nitty-Gritty Installation Guide](tutorials/nittygritty.md)
+[Development Environment](#development-environment)
+ 1. [Customize Your Shell](#1-customize-your-shell)
+ 2. [Install Packages](#2-install-packages-via-homebrew)
+ 3. [Install Apps](#3-install-apps-via-cask)
+ 4. [Install Dependencies](#4-install-additional-dependencies)
+
+[Production Environment](#production-deployment)
+ * [Amazon Web Services](#aws-guide)
+ * [Deploying with Github](#deploying-with-github)
+ * [Server Structure](#server-structure)
+ 
+#### [SSH Guide](http://labs.ohm.fm/ssh/)
+#### [AWS Guide](http://labs.ohm.fm/aws/)
+#### [Deploying using Github](http://labs.ohm.fm/git-part-ii/)
