@@ -1,5 +1,5 @@
 {
-  "name": "ohm",
+  "name": "ohm-dock",
   "description": "Ohm Labs Inc dock",
   "version": "0.0.1",
   "homepage": "ohm.fm/dock",
@@ -23,7 +23,6 @@
     "url": "git://github.com/ohmlabs/dock.git"
   },
   "bugs": "https://github.com/ohmlabs/dock/issues",
-  "preferGlobal": "true",
   "bin": {
     "ohm": "./dock"
   },
