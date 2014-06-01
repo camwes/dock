@@ -32,6 +32,7 @@
     "deploy": "./dock -d ohm ohmlabs master"
   },
   "dependencies": {
+    "grunt": "0.4.1",
     "grunt-contrib-concat": "",
     "grunt-contrib-copy": "^0.5.0",
     "grunt-open": "^0.2.3",
