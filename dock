@@ -161,8 +161,8 @@ if [ "$1" == "--prod" -o "$1" == "-p" ]; then
   prodInstall
 elif [ "$1" == "--deploy" -o "$1" == "-d" ]; then
   deploy $ARGS
-else
-  devInstall
+elif [ "$1" == "dev" -o "$1" == "--dev" ]; then
+  devInstall $ARGS
 fi
 unset prodInstall
 unset devInstall
