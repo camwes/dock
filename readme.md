@@ -5,7 +5,7 @@ This is not to say that the best development environment doesn't use any GUIs. M
 
 # Development Environment
 ```sh
-./dev_env.sh
+./dock dev
 ```
 To make lives easier, the above command will do everything that you need to get your development environment from zero to supercharged in ~20-30 mins. Here's what the script does:
 
@@ -65,7 +65,10 @@ If you've developed for a while you probably hate the process of constantly refr
 # Production Deployment
 As a developer I began making websites with zero server administration experience. I used commercial web hosting services that were both terribly interfaced and extremely limited (GoDaddy, Yahoo, etc.) As the sophistication of the things that I decided to build began to outgrow these services I decided that it was worth my time to learn to deploy a site using Amazon Web Services. Many of the webs most successful companies (Netflix, Tumblr, etc.) and most startups heavily rely on AWS, as it is very competitively priced. Unfortunately, for most front-end developers, learning to use these services is a daunting task.
 ```sh
-./prod_env.sh
+# install prod env
+./dock -p
+# build git deploy (repo, user, branch)
+./dock -d ohm ohmlabs master
 ```
 Similar to the development script above, this script is designed to build a production environment for you. This script does many things, including but not limited to:
 * Create Users
