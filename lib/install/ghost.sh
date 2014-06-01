@@ -1,6 +1,6 @@
 #!/bin/bash
-FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-GHOST_DIR=/home/git/ghost
+readonly FILE_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+readonly GHOST_DIR=/home/git/ghost
 
 curl -L https://ghost.org/zip/ghost-latest.zip -o ghost.zip
 unzip -uo ghost.zip -d $GHOST_DIR
