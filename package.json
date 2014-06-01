@@ -1,0 +1,41 @@
+{
+  "name": "ohm",
+  "description": "Ohm Labs Inc dock",
+  "version": "0.0.1",
+  "homepage": "ohm.fm/dock",
+  "license": "MIT",
+  "contributors": [
+    {
+      "name": "Cameron Drake",
+      "email": "cameron@drake.fm"
+    }
+  ],
+  "keywords": [
+    "Ohm",
+    "environment",
+    "deployment",
+    "git",
+    "node.js",
+    "stack"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ohmlabs/dock.git"
+  },
+  "bugs": "https://github.com/ohmlabs/dock/issues",
+  "preferGlobal": "true",
+  "bin": {
+    "ohm": "./dock"
+  },
+  "scripts": {
+    "start": "node ohm",
+    "deploy": "./dock -d ohm ohmlabs master"
+  },
+  "dependencies": {
+    "grunt-contrib-concat": "",
+    "grunt-contrib-copy": "^0.5.0",
+    "grunt-open": "^0.2.3",
+    "grunt-jsdoc": "^0.5.4",
+    "jsdoc": "^3.3.0-alpha5"
+  }
+}
