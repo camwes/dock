@@ -27,8 +27,13 @@
     "ohm": "./dock"
   },
   "scripts": {
-    "start": "node ohm",
-    "deploy": "./dock -d ohm ohmlabs master"
+    "prod": "./dock -p",
+    "dev": "./dock --dev",
+    "deploy": "./dock -d ohm ohmlabs master",
+    "up": "vagrant up",
+    "core": "vagrant ssh core",
+    "test": "vagrant ssh prod",
+    "destroy": "vagrant destroy"
   },
   "dependencies": {
     "grunt": "0.4.1",

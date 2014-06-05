@@ -33,7 +33,8 @@ RUN apt-get install -y mosh
 #-------------------
 # Install Ruby Gems
 #-------------------
-RUN gem install sass compass ceaser-easing compass-normalize
+RUN gem install bundler
+RUN bundle install
 #-------------------
 # Create Git User
 #-------------------
