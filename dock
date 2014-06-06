@@ -8,22 +8,8 @@ readonly NGINX_DIR=/etc/nginx
 
 [[ $# -eq 0 ]] && {
   # no arguments
-  echo echo "Usage: PROGNAME your_repo {u|user|r|repo|b|branch|n|name|v|version}"
-  echo "Successfully Installed the following:"
-  node -v
-  ruby -v
-  gem list
-  nginx -v
-  htop --version
-  mosh -v
-  tig -v
-  tree --version
-  emacs --version
-  git --version
-  ntpd --version
-  unzip -v
-  varnishlog
-  exit 1
+  echo "Usage: $PROGNAME {deploy|prod|dev}"
+  exit 1;
 }
 
 function deploy(){
@@ -64,11 +50,8 @@ function prodInstall(){
   sudo apt-get install -y fail2ban
   sudo apt-get install -y zsh
   # Install Rubygems
-  sudo gem install sass
-  sudo gem install compass
-  sudo gem install ceaser-easing
-  sudo gem install compass-normalize
-  sudo gem install bundle
+  sudo gem install bundler
+  bundle install
   # Set clock/restart cron
   ntpdate && hwclock –w
   sudo service cron stop
@@ -82,7 +65,7 @@ function prodInstall(){
   sudo chsh -s /usr/bin/zsh git
   # copy the AWS authorized key to the git account
   sudo mkdir -p $GITDIR/.ssh/
-  cp -i $HOME_DIR/.ssh/authorized_keys $GITDIR/.ssh/authorized_keys
+  sudo cp -i $HOME_DIR/.ssh/authorized_keys $GITDIR/.ssh/authorized_keys
   # sync dotfiles
   sudo rsync  --exclude ".osx" --exclude ".DS_Store" --exclude "bootstrap.sh" --exclude "README.md" -av --no-perms $PROGDIR/lib/dotfiles/ $GITDIR
   # Configure Permissions
@@ -142,20 +125,70 @@ function prodInstall(){
   # Fail2Ban
   sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
 }
+command_exists () {
+    type "$1" &> /dev/null ;
+}
 function devInstall() {
-  # Install homebrew
-  ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
-  # Install brew cask
-  brew tap phinze/cask
-  brew install brew-cask
+  if command_exists brew ; then
+      echo "Brew Installed... continuing"
+  else
+    # Install homebrew
+    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
+  fi
   # Bootstrap the command line
-  $PROGDIR/lib/dotfiles/bootstrap.sh
   # This script will:
   #   1. Copy dotfiles to home dir (dotfiles)
   #   2. install command line apps using brew (dotfiles/Brewfile)
   #   3. install gui apps upsing brew casks (dotfiles/.cask)
   #   4. install ruby gems and node modules
   # change permissions on the home dir
+  read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    # Sync Dotfiles
+    rsync --exclude ".git/" --exclude ".DS_Store" --exclude "bootstrap.sh" --exclude "README.md" -av --no-perms $PROGDIR/lib/dotfiles ~
+  fi
+  read -p "Do you want to install necessary CLIs with Homebrew? (y/n) " -n 1
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    # Install CLIs via Homebrew
+    brew bundle $PROGDIR/Brewfile
+  fi
+  read -p "Do you want to install GUI apps with Cask? (y/n) " -n 1
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    # Install GUI Apps via Homebrew-Cask
+    ./$PROGDIR/.cask
+  fi
+  read -p "Do you want to install Rubygems and Node Modules? (y/n) " -n 1
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+      if command_exists bundle; then
+        echo "Bundler Installed... continuing";
+      else
+          # Install Bundler
+          sudo gem install bundler;
+      fi
+    bundle install
+    # install node modules
+    sudo npm cache clean
+    function installGlobal() {
+      if command_exists "${@}"; then
+        "${@}" "--version"
+      else
+        sudo npm install -g "${@}"
+      fi
+    }
+    installGlobal bower
+    installGlobal forever
+    installGlobal node-inspector
+    installGlobal ohm
+    # problem with these that have diff names
+    installGlobal grunt-cli
+    installGlobal coffee-script
+    installGlobal strong-cli
+    npm ls -g --depth=0
+  fi
 }
 if [ "$1" == "--prod" -o "$1" == "-p" ]; then
   prodInstall
@@ -163,6 +196,23 @@ elif [ "$1" == "--deploy" -o "$1" == "-d" ]; then
   deploy $ARGS
 elif [ "$1" == "dev" -o "$1" == "--dev" ]; then
   devInstall $ARGS
+elif [ "$1" == "--version" -o "$1" == "-v" ]; then
+  echo "Dependencies Versions:"
+  nginx -v
+  unzip -v
+  node --version
+  ruby --version
+  mosh --version
+  tig --version
+  htop --version
+  tree --version
+  emacs --version
+  git --version
+  ntpd --version
+  bundle show
+  npm ls -g --depth=0
+  varnishlog
+  exit 1;
 fi
 unset prodInstall
 unset devInstall

@@ -1,7 +1,7 @@
 {
   "name": "ohm-dock",
   "description": "Ohm Labs Inc dock",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "homepage": "ohm.fm/dock",
   "license": "MIT",
   "contributors": [
@@ -24,7 +24,7 @@
   },
   "bugs": "https://github.com/ohmlabs/dock/issues",
   "bin": {
-    "ohm": "./dock"
+    "dock": "./dock"
   },
   "scripts": {
     "prod": "./dock -p",
