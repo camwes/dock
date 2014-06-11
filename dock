@@ -1,202 +1,35 @@
 #!/bin/bash
+readonly ScriptVersion="0.2"
 readonly PROGDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 readonly HOMEDIR=$(echo $HOME)
 readonly PROGNAME=$(basename $0)
+readonly LOG_FILE=$PROGDIR/logs/dock.error.log
 readonly ARGS="$@"
 readonly GITDIR=/home/git
 readonly NGINX_DIR=/etc/nginx
+readonly g=/usr/bin/git
 
 [[ $# -eq 0 ]] && {
   # no arguments
-  echo "Usage: $PROGNAME {deploy|prod|dev}"
+  echo "Usage: $PROGNAME {deploy|prod|dev|version}"
   exit 1;
 }
-
 function deploy(){
-  #-------------------
-  # SSH Key
-  #-------------------
-  sudo ssh-keygen
-  sudo cat /root/.ssh/id_rsa.pub
-  #-------------------
-  # Git Deployment
-  #-------------------
-  # u) USERNAME:        username of repository owner
-  # r) REPOSITORY:      name of the repository being added
-  # n) SERVICE_NAME:    name of the service to be created
-  # b) BRANCH:          branch to be checked out
-  # v) VERSION:         Version of App
-  $PROGDIR/deploy $2 $3 $4
+  $PROGDIR/lib/bin/deploy $2 $3 $4
 }
 function prodInstall(){
-  # update and upgrade 
-  sudo apt-get update
-  sudo apt-get -y upgrade
-  sudo apt-get upgrade --show-upgraded
-  # Configure Time Zone 
-  sudo dpkg-reconfigure tzdata
-  sudo ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
-  # Install Apps
-  sudo apt-get install -y emacs
-  sudo apt-get install -y htop
-  sudo apt-get install -y tree
-  sudo apt-get install -y git
-  sudo apt-get install -y tig
-  sudo apt-get install -y wget
-  sudo apt-get install -y tmux
-  sudo apt-get install -y rubygems
-  sudo apt-get install -y unzip
-  sudo apt-get install -y ntp
-  sudo apt-get install -y fail2ban
-  sudo apt-get install -y zsh
-  # Install Rubygems
-  sudo gem install bundler
-  bundle install
-  # Set clock/restart cron
-  ntpdate && hwclock –w
-  sudo service cron stop
-  sudo service cron start
-  #-------------------
-  # Git User
-  #-------------------
-  sudo adduser --disabled-password --gecos "" git
-  sudo usermod -a -G sudo git
-  # change the default shell to zsh
-  sudo chsh -s /usr/bin/zsh git
-  # copy the AWS authorized key to the git account
-  sudo mkdir -p $GITDIR/.ssh/
-  sudo cp -i $HOME_DIR/.ssh/authorized_keys $GITDIR/.ssh/authorized_keys
-  # sync dotfiles
-  sudo rsync  --exclude ".osx" --exclude ".DS_Store" --exclude "bootstrap.sh" --exclude "README.md" -av --no-perms $PROGDIR/lib/dotfiles/ $GITDIR
-  # Configure Permissions
-  sudo chmod a+rx $GITDIR
-  sudo chown -R git:git $GITDIR
-  # add to sudoers
-  sudo chmod 0440 $PROGDIR/lib/patches/gitsudoer
-  sudo cp $PROGDIR/lib/patches/gitsudoer /etc/sudoers.d/
-  #-------------------
-  # Install Nginx
-  #-------------------
-  sudo $PROGDIR/lib/install/nginx.sh
-  #-------------------
-  # Configure Nginx
-  #-------------------
-  # Backup existing configs
-  sudo mv $NGINX_DIR/nginx.conf $NGINX_DIR/nginx.conf.backup
-  # Copy new nginx.config  and site-available
-  sudo cp -i $PROGDIR/config/nginx.conf $NGINX_DIR
-  #-------------------
-  # Install Varnish
-  #-------------------
-  sudo $PROGDIR/lib/install/nginx.sh
-  #-------------------
-  # Configure Varnish
-  #-------------------
-  # Backup existing configs
-  sudo cp /etc/varnish/default.vcl /etc/varnish/default.vcl.old
-  sudo cp /etc/default/varnish /etc/default/varnish.old
-  # Copy new varnish and default.vcl
-  sudo patch /etc/default/varnish < $PROGDIR/lib/patches/varnish.diff
-  sudo patch /etc/varnish/default.vcl < $PROGDIR/lib/patches/default.vcl.diff
-  # Stop Varnish and Nginx
-  sudo service nginx stop
-  sudo service varnish stop
-  #------------------
-  # Install Node Stable
-  # Also installs Grunt, Forever, Bower, Coffee, Node-Inspector
-  #------------------
-  sudo $PROGDIR/lib/install/node.sh
-  # Installing Ghost via npm, to install independently uncomment this:
-  # sudo ./lib/install/ghost.sh
-  # Install Mosh
-  sudo apt-get install -y python-software-properties
-  sudo add-apt-repository -y ppa:keithw/mosh
-  sudo apt-get update
-  sudo apt-get install -y mosh
-  # Start nginx and varnish
-  sudo service nginx start
-  sudo service varnish start
-  #-------------------
-  # TODO: Firewall
-  #-------------------
-  # sudo cp -i $PROGDIR/lib/iptables.firewall.rules /etc/iptables.firewall.rules
-  # sudo iptables-restore < /etc/iptables.firewall.rules
-  # sudo cp -i $PROGDIR/lib/firewall /etc/network/if-pre-up.d/firewall
-  # Fail2Ban
-  sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
-}
-command_exists () {
-    type "$1" &> /dev/null ;
+  $PROGDIR/lib/bin/prod
 }
 function devInstall() {
-  if command_exists brew ; then
-      echo "Brew Installed... continuing"
-  else
-    # Install homebrew
-    ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)"
-  fi
-  # Bootstrap the command line
-  # This script will:
-  #   1. Copy dotfiles to home dir (dotfiles)
-  #   2. install command line apps using brew (dotfiles/Brewfile)
-  #   3. install gui apps upsing brew casks (dotfiles/.cask)
-  #   4. install ruby gems and node modules
-  # change permissions on the home dir
-  read -p "This may overwrite existing files in your home directory. Are you sure? (y/n) " -n 1
-  echo
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # Sync Dotfiles
-    rsync --exclude ".git/" --exclude ".DS_Store" --exclude "bootstrap.sh" --exclude "README.md" -av --no-perms $PROGDIR/lib/dotfiles ~
-  fi
-  read -p "Do you want to install necessary CLIs with Homebrew? (y/n) " -n 1
-  echo
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # Install CLIs via Homebrew
-    brew bundle $PROGDIR/Brewfile
-  fi
-  read -p "Do you want to install GUI apps with Cask? (y/n) " -n 1
-  echo
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-    # Install GUI Apps via Homebrew-Cask
-    ./$PROGDIR/.cask
-  fi
-  read -p "Do you want to install Rubygems and Node Modules? (y/n) " -n 1
-  echo
-  if [[ $REPLY =~ ^[Yy]$ ]]; then
-      if command_exists bundle; then
-        echo "Bundler Installed... continuing";
-      else
-          # Install Bundler
-          sudo gem install bundler;
-      fi
-    bundle install
-    # install node modules
-    sudo npm cache clean
-    function installGlobal() {
-      if command_exists "${@}"; then
-        "${@}" "--version"
-      else
-        sudo npm install -g "${@}"
-      fi
-    }
-    installGlobal bower
-    installGlobal forever
-    installGlobal node-inspector
-    installGlobal ohm
-    # problem with these that have diff names
-    installGlobal grunt-cli
-    installGlobal coffee-script
-    installGlobal strong-cli
-    npm ls -g --depth=0
-  fi
+  $PROGDIR/lib/bin/dev
 }
-if [ "$1" == "--prod" -o "$1" == "-p" ]; then
+if [ "$1" == "--prod" -o "$1" == "prod" ]; then
   prodInstall
-elif [ "$1" == "--deploy" -o "$1" == "-d" ]; then
+elif [ "$1" == "--deploy" -o "$1" == "deploy" ]; then
   deploy $ARGS
-elif [ "$1" == "dev" -o "$1" == "--dev" ]; then
+elif [ "$1" == "--dev" -o "$1" == "dev" ]; then
   devInstall $ARGS
-elif [ "$1" == "--version" -o "$1" == "-v" ]; then
+elif [ "$1" == "--version" -o "$1" == "version" ]; then
   echo "Dependencies Versions:"
   nginx -v
   unzip -v

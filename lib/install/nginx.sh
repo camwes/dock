@@ -3,6 +3,7 @@
 # Install Nginx
 #------------------
 # Installation from source:
+readonly NGINX_DIR=/opt/nginx
 wget http://nginx.org/download/nginx-1.4.3.tar.gz
 # --------------------------
 # tar xvzf (.tgz or tar.gz)
@@ -11,10 +12,10 @@ wget http://nginx.org/download/nginx-1.4.3.tar.gz
 # --------------------------
 sudo tar xvf nginx-1.4.3.tar.gz
 cd nginx-1.4.3
-sudo ./configure --prefix=/opt/nginx
+sudo ./configure --prefix=$NGINX_DIR
 sudo make
 sudo make install
-sudo ln -s /sbin/nginx /usr/sbin
+sudo ln -s $NGINX_DIR/sbin/nginx /usr/sbin
 cd -
 # use nginx=development for latest development version
 # sudo apt-add-repository ppa:nginx/stable

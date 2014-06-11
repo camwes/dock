@@ -10,7 +10,8 @@ readonly INSTALL_DIR=$PROGDIR/../install
 readonly CONFIG_DIR=$PROGDIR/../config
 readonly ARGS="$@"
 readonly GITDIR=/home/git
-readonly NGINX_DIR=/etc/nginx
+readonly NGINX_DIR=/opt/nginx
+readonly nginx=$NGINX_DIR/sbin/nginx
 readonly g=/usr/bin/git
 exec 3>&1 1>>${LOG_FILE} 2>&1;
 
@@ -84,7 +85,7 @@ function installStack() {
 }
 function provisionStack() {
   # Backup existing configs
-  sudo mv $NGINX_DIR/nginx.conf $NGINX_DIR/nginx.conf.backup
+  sudo mv $NGINX_DIR/conf/nginx.conf $NGINX_DIR/conf/nginx.conf.backup
   sudo cp /etc/varnish/default.vcl /etc/varnish/default.vcl.old
   sudo cp /etc/default/varnish /etc/default/varnish.old
   # Configure Time Zone
@@ -100,7 +101,7 @@ function provisionStack() {
   #-------------------
   # Configure Nginx
   #-------------------
-  sudo cp $CONFIG_DIR/nginx.conf $NGINX_DIR
+  sudo cp $CONFIG_DIR/nginx.conf $NGINX_DIR/conf/nginx.conf
   #-------------------
   # Configure Varnish
   #-------------------
@@ -115,16 +116,16 @@ function provisionStack() {
   # Fail2Ban
   sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
   # Stop Varnish and Nginx
-  sudo service nginx stop
+  sudo $nginx -s stop
   sudo service varnish stop
 }
 # Run Functions
-#upgradeApt
-#gitAcct
+upgradeApt
+gitAcct
 installStack
-#provisionStack
+provisionStack
 # Start Stack
-sudo service nginx start
+sudo $nginx
 sudo service varnish start
 
 unset command_exists
