@@ -24,16 +24,13 @@
   },
   "bugs": "https://github.com/ohmlabs/dock/issues",
   "bin": {
-    "dock": "./dock"
+    "dock": "./bin/dock"
   },
   "scripts": {
-    "prod": "./dock -p",
-    "dev": "./dock --dev",
-    "deploy": "./dock -d ohm ohmlabs master",
-    "up": "vagrant up",
-    "core": "vagrant ssh core",
-    "test": "vagrant ssh prod",
-    "destroy": "vagrant destroy"
+    "prod": "./bin/dock --prod",
+    "dev": "./bin/dock --dev",
+    "deploy": "./bin/dock --deploy ohm ohmlabs master",
+    "version": "./bin/dock --version"
   },
   "dependencies": {
     "grunt": "0.4.1",
