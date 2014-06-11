@@ -25,10 +25,17 @@ function command_exists () {
 #   4. install ruby gems and node modules
 if command_exists brew ; then
     echo -e "\ndev: Brew Installed... continuing" 1>&3;
+    brew up 1>&3;
+    brew cask up 1>&3;
+    brew upgrade 1>&3;
+    brew cask doctor 1>&3;
+    brew doctor 1>&3;
 else
   # Install homebrew
   echo -e "\ndev: Installing Homebrew" 1>&3;
   ruby -e "$(curl -fsSL https://raw.github.com/Homebrew/homebrew/go/install)" | tee /dev/fd/3;
+  brew tap phinze/homebrew-cask
+  brew install brew-cask
 fi
 echo -e "\ndev: This may overwrite existing files in your home directory. Are you sure? (y/n)" 1>&3;
 read -n 1;
@@ -36,19 +43,13 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   # Sync Dotfiles
   rsync --exclude ".git/" --exclude ".DS_Store" --exclude "bootstrap.sh" --exclude "README.md" -av --no-perms $DOTFILES ~ | tee /dev/fd/3
 fi
-echo -e " \ndev: Do you want to install necessary CLIs with Homebrew? (y/n) " 1>&3;
+echo -e " \ndev: Do you want to install apps via Homebrew? (y/n) " 1>&3;
 read -n 1
 if [[ $REPLY =~ ^[Yy]$ ]]; then
-  echo -e "\ndev: updating and installing CLIs via Homebrew... " 1>&3;
+  echo -e "\ndev: installing GUIs and CLIs via Homebrew... " 1>&3;
   brew bundle $PROGDIR/Brewfile | tee /dev/fd/3;
 fi
-echo -e "\ndev: Do you want to install GUI apps with Cask? (y/n) " 1>&3;
-read -n 1
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-  echo -e "\ndev: installing GUIs via Homebrew Casks... " 1>&3;
-  $PROGDIR/Caskfile | tee /dev/fd/3;
-fi
-echo -e "\ndev: Do you want to install Rubygems and Node Modules? (y/n) " 1>&3;
+echo -e "\ndev: Do you want to install Gems and Npm modules? (y/n) " 1>&3;
 read -n 1
 if [[ $REPLY =~ ^[Yy]$ ]]; then
     if command_exists bundle; then
@@ -60,6 +61,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   # install node modules
   sudo npm cache clean;
   function installGlobal() {
+    # TODO: improve this to work all 
     if command_exists "${@}"; then
       echo -e "dev: ${@}:" $("${@}" "--version") 1>&3;
     else
@@ -70,10 +72,9 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
   installGlobal forever
   installGlobal node-inspector
   installGlobal ohm
-  # problem with these that have diff names
-  # installGlobal grunt-cli
-  # installGlobal coffee-script
-  # installGlobal strong-cli
+  installGlobal grunt-cli
+  installGlobal coffee-script
+  installGlobal strong-cli
   npm ls -g --depth=0 1>&3;
 fi
 unset command_exists

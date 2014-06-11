@@ -82,6 +82,7 @@ function provision() {
   sudo nginx -s stop
   sudo nginx -t | tee /dev/fd/3;
   sudo nginx
+  sudo chown -R git:git $GITDIR
 }
 function cmdLine() {
   #-------------------

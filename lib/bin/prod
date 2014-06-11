@@ -85,7 +85,7 @@ function installStack() {
   #-------------------
   # Install Mosh
   #-------------------
-  if command_exists node; then
+  if command_exists mosh; then
     echo -e "\nprod: Mosh Installed... continuing" 1>&3;
   else
     echo -e "\nprod: Installing Mosh..." 1>&3;
