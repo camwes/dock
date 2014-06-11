@@ -43,7 +43,21 @@ function gitAcct() {
 }
 function installStack() {
   # Install Apps via apt-get
-  sudo apt-get install -y emacs23 htop tree git tig wget tmux rubygems unzip ntp fail2ban curl zsh libpcre3 libpcre3-dev | tee /dev/fd/3;
+  sudo apt-get install -y emacs23
+  sudo apt-get install -y libpcre3
+  sudo apt-get install -y libpcre3-dev
+  sudo apt-get install -y ntp
+  sudo apt-get install -y fail2ban
+  sudo apt-get install -y curl
+  sudo apt-get install -y zsh
+  sudo apt-get install -y tmux
+  sudo apt-get install -y tig
+  sudo apt-get install -y git
+  sudo apt-get install -y wget
+  sudo apt-get install -y rubygems
+  sudo apt-get install -y tree
+  sudo apt-get install -y htop
+  sudo apt-get install -y unzip
   # Install Bundler if necessary
   if command_exists bundle; then
     echo -e "\nprod: Bundler Installed... continuing" 1>&3;

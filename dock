@@ -1,13 +1,8 @@
 #!/bin/bash
 readonly ScriptVersion="0.2"
 readonly PROGDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-readonly HOMEDIR=$(echo $HOME)
 readonly PROGNAME=$(basename $0)
-readonly LOG_FILE=$PROGDIR/logs/dock.error.log
 readonly ARGS="$@"
-readonly GITDIR=/home/git
-readonly NGINX_DIR=/etc/nginx
-readonly g=/usr/bin/git
 
 [[ $# -eq 0 ]] && {
   # no arguments
