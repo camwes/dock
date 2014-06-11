@@ -10,7 +10,7 @@ readonly INSTALL_DIR=$PROGDIR/../install
 readonly CONFIG_DIR=$PROGDIR/../config
 readonly ARGS="$@"
 readonly GITDIR=/home/git
-readonly NGINX_DIR=/etc/nginx
+readonly NGINX_DIR=/opt/nginx
 readonly g=/usr/bin/git
 exec 3>&1 1>>${LOG_FILE} 2>&1;
 
@@ -67,18 +67,21 @@ function httpsAuth() {
   provision
 }
 function provision() {
-  sudo ln -s $scripts_dir/hooks/pre-receive.sh $git/hooks/pre-receive
-  sudo ln -s $scripts_dir/hooks/post-receive.sh $git/hooks/post-receive
+  sudo cp $scripts_dir/hooks/pre-receive.sh $git/hooks/pre-receive
+  sudo cp $scripts_dir/hooks/post-receive.sh $git/hooks/post-receive
   sudo chmod +x $git/hooks/pre-receive
   sudo chmod +x $git/hooks/post-receive
-  sudo ln -s $scripts_dir/service.sh /etc/init.d/$service_name
+  sudo cp $scripts_dir/service.sh /etc/init.d/$service_name
   sudo chmod 0755 /etc/init.d/$service_name
   sudo mkdir -p $work_tree
   # Backup existing configs
-  sudo mv $NGINX_DIR/sites-enabled $NGINX_DIR/sites-enabled.backup
-  sudo mkdir -p $NGINX_DIR/sites-enabled
+  sudo mv $NGINX_DIR/conf/sites-enabled $NGINX_DIR/conf/sites-enabled.backup
+  sudo mkdir -p $NGINX_DIR/conf/sites-enabled
   # Copy new nginx.config  and site-available
-  sudo ln -s $scripts_dir/sites-available/* $NGINX_DIR/sites-enabled
+  sudo cp -r $scripts_dir/sites-available $NGINX_DIR/conf/sites-enabled
+  sudo nginx -s stop
+  sudo nginx -t | tee /dev/fd/3;
+  sudo nginx
 }
 function cmdLine() {
   #-------------------

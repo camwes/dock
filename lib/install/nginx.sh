@@ -4,6 +4,11 @@
 #------------------
 # Installation from source:
 readonly NGINX_DIR=/opt/nginx
+sudo apt-get install -y libpcre3-dev
+sudo apt-get install -y libpcre3
+sudo apt-get install -y zlib1g-dev
+sudo apt-get install -y zlib1g
+
 wget http://nginx.org/download/nginx-1.4.3.tar.gz
 # --------------------------
 # tar xvzf (.tgz or tar.gz)
