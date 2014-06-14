@@ -5,43 +5,43 @@ readonly PROGNAME=$(basename $0)
 readonly ARGS="$@"
 
 [[ $# -eq 0 ]] && {
-  # no arguments
-  echo "Usage: $PROGNAME {deploy|prod|dev|version}"
-  exit 1;
+    # no arguments
+    echo "Usage: $PROGNAME {deploy|prod|loc|version}"
+    exit 1;
 }
 function deploy(){
-  $PROGDIR/lib/bin/deploy $2 $3 $4
+    $PROGDIR/lib/bin/deploy $2 $3 $4
 }
 function prodInstall(){
-  $PROGDIR/lib/bin/prod
+    $PROGDIR/lib/bin/prod
 }
 function devInstall() {
-  $PROGDIR/lib/bin/dev
+    $PROGDIR/lib/bin/dev
 }
-if [ "$1" == "--prod" -o "$1" == "prod" ]; then
-  prodInstall
-elif [ "$1" == "--deploy" -o "$1" == "deploy" ]; then
-  deploy $ARGS
-elif [ "$1" == "--dev" -o "$1" == "dev" ]; then
-  devInstall $ARGS
-elif [ "$1" == "--version" -o "$1" == "version" ]; then
-  echo "Dependencies Versions:"
-  nginx -v
-  unzip -v
-  node --version
-  ruby --version
-  mosh --version
-  tig --version
-  htop --version
-  tree --version
-  emacs --version
-  git --version
-  ntpd --version
-  bundle show
-  npm ls -g --depth=0
-  varnishlog
-  exit 1;
-fi
+case "$1" in
+    -p|--prod|prod    )     prodInstall ;;
+    -d|--deploy|deply )     deploy $ARGS ;;
+    -l|--local|loc    )     devInstall $ARGS ;;
+    -v|--version      )
+        echo "Dependencies Versions:"
+        nginx -v
+        unzip -v
+        node --version
+        ruby --version
+        mosh --version
+        tig --version
+        htop --version
+        tree --version
+        emacs --version
+        git --version
+        ntpd --version
+        bundle show
+        npm ls -g --depth=0
+        varnishlog
+        exit 1;
+        ;;
+esac
 unset prodInstall
 unset devInstall
 unset deploy
+exit 0
