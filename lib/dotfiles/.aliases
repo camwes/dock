@@ -62,7 +62,8 @@ alias timer='echo "Timer started. Stop with Ctrl-D." && date && time cat && date
 ###################
 #     GIT additional aliases in  ~/.gitconfig
 ###################
-alias g="git"
+alias g="hub"
+alias git="hub"
 alias o="origin"
 alias p="production"
 alias gs='git status -s'

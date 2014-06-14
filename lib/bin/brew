@@ -16,6 +16,7 @@ install imagemagick
 install imagesnap
 install geeqie
 install tree
+install awscli
 install s3cmd
 install s3fs
 install tig

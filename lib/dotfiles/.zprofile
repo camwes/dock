@@ -1,6 +1,5 @@
 # Add `~/bin` to the `$PATH`
 export PATH="$HOME/bin:$PATH"
-export PATH="$HOME/.rvm/bin:$PATH"
 
 for file in ~/.{bash_prompt,exports,aliases,functions,extras}; do
 	[ -r "$file" ] && [ -f "$file" ] && source "$file"
