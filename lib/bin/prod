@@ -1,4 +1,9 @@
 #!/bin/bash
+# Dock Production Deploy
+# ./dock -p
+# real    13m45.709s
+# user    5m26.168s
+# sys     1m57.199s
 readonly ScriptVersion="0.2"
 readonly PROGDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 readonly HOMEDIR=$(echo $HOME)
@@ -130,6 +135,7 @@ function provisionStack() {
     # Fail2Ban
     sudo cp /etc/fail2ban/jail.conf /etc/fail2ban/jail.local
     # Stop Varnish and Nginx
+    sudo chown -R git:git $GITDIR
     sudo nginx -s stop
     sudo service varnish stop
 }

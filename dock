@@ -18,10 +18,18 @@ function prodInstall(){
 function devInstall() {
     $PROGDIR/lib/bin/dev
 }
+function launchMicro() {
+    $PROGDIR/lib/bin/micro
+}
+function syncS3() {
+    $PROGDIR/lib/bin/s3
+}
 case "$1" in
     -p|--prod|prod    )     prodInstall ;;
     -d|--deploy|deply )     deploy $ARGS ;;
     -l|--local|loc    )     devInstall $ARGS ;;
+    -m|--micro|micro  )     launchMicro $ARGS ;;
+    -s|--s3|s3        )     syncS3 $ARGS ;;
     -v|--version      )
         echo "Dependencies Versions:"
         nginx -v
@@ -43,5 +51,7 @@ case "$1" in
 esac
 unset prodInstall
 unset devInstall
+unset launchMicro
 unset deploy
+unset syncS3
 exit 0

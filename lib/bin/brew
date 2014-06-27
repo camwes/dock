@@ -1,6 +1,3 @@
-# Make sure we’re using the latest Homebrew
-update
-cask update
 # Upgrade any already-installed formulae
 upgrade
 # Install GNU core utilities (those that come with OS X are outdated)
@@ -46,6 +43,7 @@ cask install google-chrome
 cask install chromecast
 cask install iterm2
 cask install textmate
+cask install dash
 cask install the-unarchiver
 cask install tor-browser
 cask install virtualbox

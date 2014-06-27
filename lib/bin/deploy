@@ -44,7 +44,7 @@ done
 
 readonly git=$GITDIR/$service_name.git
 readonly work_tree=$GITDIR/public/$service_name
-readonly scripts_dir=$PROGDIR/../../$service_name
+readonly scripts_dir=$PROGDIR/../../apps/$service_name
 
 function sshKeys() {
     read -n 1
@@ -65,7 +65,7 @@ function initBare() {
       # Git Repository Setup
       #-------------------
       sudo mkdir -p $git && cd $git
-      $g --bare init | tee /dev/fd/3;
+      sudo $g --bare init | tee /dev/fd/3;
   elif [[ $REPLY =~ ^[Nn]$ ]]; then
       echo -e "\ndeploy: Deployment Cancelled!" | tee /dev/fd/3;
       exit 1;
@@ -82,11 +82,11 @@ function gitAuth(){
     fi
 }
 function deployKey() {
-    $g --bare fetch git@github.com:$username/$repository.git $branch:$branch | tee /dev/fd/3;
+    sudo $g --bare fetch git@github.com:$username/$repository.git $branch:$branch | tee /dev/fd/3;
     provision
 }
 function httpsAuth() {
-    $g --bare fetch https://github.com/$username/$repository.git $branch:$branch | tee /dev/fd/3;
+    sudo $g --bare fetch https://github.com/$username/$repository.git $branch:$branch | tee /dev/fd/3;
     provision
 }
 function provision() {
@@ -97,10 +97,11 @@ function provision() {
     sudo cp $scripts_dir/service.sh /etc/init.d/$service_name
     sudo chmod 0755 /etc/init.d/$service_name
     sudo mkdir -p $work_tree
+    sudo mkdir -p $NGINX_DIR/conf/sites-enabled
     # Backup existing configs
     sudo cp -r $NGINX_DIR/conf/sites-enabled $NGINX_DIR/conf/sites-enabled.backup
     # Copy new nginx.config  and site-available
-    sudo cp -r $scripts_dir/sites-available/* $NGINX_DIR/conf/sites-enabled
+    sudo cp -r $scripts_dir/sites-available/$service_name $NGINX_DIR/conf/sites-enabled/$service_name
     sudo nginx -s stop
     sudo nginx -t | tee /dev/fd/3;
     sudo nginx
