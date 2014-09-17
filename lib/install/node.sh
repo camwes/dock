@@ -10,4 +10,4 @@ sudo apt-get install -y nodejs
 # https://npmjs.org/ cache clean just in case
 sudo npm cache clean
 # install global modules Grunt, Forever, Bower, Coffee, Node-Inspector
-sudo npm install -g bower grunt-cli forever coffee-script node-inspector
+sudo npm install -g bower grunt-cli forever coffee-script node-inspector strong-supervisor

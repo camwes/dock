@@ -75,6 +75,8 @@ cask install vagrant
 cask install eclipse-ide
 cask install flip4mac
 cask install bitcoin
+cask install charles
+
 # Remove outdated versions from the cellar
 cleanup
 cask cleanup

@@ -6,7 +6,13 @@ readonly ARGS="$@"
 
 [[ $# -eq 0 ]] && {
     # no arguments
-    echo "Usage: $PROGNAME {deploy|prod|loc|version}"
+    echo "       __           __  
+  ____/ /___  _____/ /__
+ / __  / __ \/ ___/ //_/
+/ /_/ / /_/ / /__/ ,<   
+\__,_/\____/\___/_/|_|  
+                        "
+    echo "Usage: ./$PROGNAME {deploy|prod|loc|version|micro|s3}"
     exit 1;
 }
 function deploy(){
@@ -26,7 +32,7 @@ function syncS3() {
 }
 case "$1" in
     -p|--prod|prod    )     prodInstall ;;
-    -d|--deploy|deply )     deploy $ARGS ;;
+    -d|--deploy|deploy )     deploy $ARGS ;;
     -l|--local|loc    )     devInstall $ARGS ;;
     -m|--micro|micro  )     launchMicro $ARGS ;;
     -s|--s3|s3        )     syncS3 $ARGS ;;
