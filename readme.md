@@ -3,7 +3,7 @@ A developer is only as good as his/her environment. In order to be the most prod
 #### GUI v. CLI
 This is not to say that the best development environment doesn't use any GUIs. Many services provide excellent GUIs which provide additional benefits and advanced features. Many developers (myself included) prefer to use non-CLI text editors (textmate, webstorm, textwrangler and coda seem to be most popular). Other developers use the Github GUI, which is capable of executing most of the available git commands. To each it's own, but when making the decision between using a GUI or CLI, consider carefully how much control you will need.
 
-# Development Environment
+# Local Environment
 ```sh
 ./dock loc
 ```
