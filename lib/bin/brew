@@ -1,84 +1,116 @@
 # Upgrade any already-installed formulae
-upgrade
+brew update
+brew upgrade
+brew upgrade
+
 # Install GNU core utilities (those that come with OS X are outdated)
 # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
-install coreutils
+brew install coreutils
 # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
-install findutils
-install zsh
-install emacs
-install git
-install hub
-install imagemagick
-install imagesnap
-install geeqie
-install tree
-install awscli
-install s3cmd
-install s3fs
-install tig
-install tmux
-install parallel
-install htop
-install node
-tap homebrew/dupes
-install homebrew/dupes/grep
-tap josegonzalez/homebrew-php
-install php55
-install wget --enable-iri
-install ack
-install lynx
-install pigz
-install rename
-install rhino
-install webkit2png
-install zopfli
-install p7zip
-install ngrep
-tap homebrew/versions
-install lua52
-# Install Casks
-cask install dropbox
-cask install google-chrome
-cask install chromecast
-cask install iterm2
-cask install textmate
-cask install dash
-cask install the-unarchiver
-cask install tor-browser
-cask install virtualbox
-cask install vlc
-cask install skype
-cask install xquartz
-cask install rdio
-cask install android-file-transfer
-cask install crashlytics
-cask install skype
-cask install google-drive
-cask install google-hangouts
-cask install google-music-manager
-cask install google-web-designer
-cask install googleappenginelauncher
-cask install evernote
-cask install divvy
-cask install caffeine
-cask install github
-cask install handbrake
-cask install mamp
-cask install mono-mdk
-cask install firefox
-cask install perian
-cask install silverlight
-cask install transmit
-cask install trailrunner
-cask install vagrant
-cask install eclipse-ide
-cask install flip4mac
-cask install bitcoin
-cask install charles
+# Install Bash 4
+brew install bash
 
-# Remove outdated versions from the cellar
-cleanup
-cask cleanup
+brew install findutils
+brew tap homebrew/dupes
+brew install homebrew/dupes/grep
+brew tap josegonzalez/homebrew-php
+brew install php55
+brew tap homebrew/versions
+brew install lua52
+brew tap caskroom/fonts
+
+fonts=(
+  font-m-plus
+  font-clear-sans
+  font-roboto
+  font-open
+)
+
+bins=(
+  zsh
+  emacs
+  git
+  hub
+  imagemagick
+  imagesnap
+  geeqie
+  tree
+  awscli
+  s3cmd
+  s3fs
+  tig
+  tmux
+  parallel
+  htop
+  node
+  wget --enable-iri
+  ack
+  lynx
+  pigz
+  rename
+  rhino
+  webkit2png
+  zopfli
+  p7zip
+  ngrep
+)
+
+apps=(
+  dropbox
+  google-chrome
+  chromecast
+  iterm2
+  textmate
+  dash
+  the-unarchiver
+  tor-browser
+  virtualbox
+  vlc
+  skype
+  xquartz
+  rdio
+  android-file-transfer
+  crashlytics
+  skype
+  google-drive
+  google-hangouts
+  google-music-manager
+  google-web-designer
+  googleappenginelauncher
+  evernote
+  divvy
+  caffeine
+  github
+  handbrake
+  mamp
+  mono-mdk
+  firefox
+  perian
+  silverlight
+  transmit
+  trailrunner
+  vagrant
+  eclipse-ide
+  flip4mac
+  bitcoin
+  charles
+)
+# Install binaries
+echo "installing bins..."
+brew  install ${bins[@]}
+
+# Install apps
+echo "installing apps..."
+brew cask install ${apps[@]}
+
+# Install fonts
+echo "installing fonts..."
+brew cask install ${fonts[@]}
+
+# Cleanup
+brew cleanup
+brew cask cleanup
+
+# Doctor
 brew cask doctor
 brew doctor

@@ -1,8 +1,8 @@
 #!/bin/bash
 readonly ScriptVersion="0.2"
 readonly PROGDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-readonly PROGNAME=$(basename $0)
-readonly ARGS="$@"
+readonly PROGNAME=$(basename "$0")
+readonly ARGS=( "$@" )
 
 [[ $# -eq 0 ]] && {
     # no arguments
@@ -16,27 +16,27 @@ readonly ARGS="$@"
     exit 1;
 }
 function deploy(){
-    $PROGDIR/lib/bin/deploy $2 $3 $4
+    "$PROGDIR"/lib/bin/deploy "$2" "$3" "$4"
 }
 function prodInstall(){
-    $PROGDIR/lib/bin/prod
+    "$PROGDIR"/lib/bin/prod
 }
 function devInstall() {
-    $PROGDIR/lib/bin/dev
+    "$PROGDIR"/lib/bin/dev
 }
 function launchMicro() {
-    $PROGDIR/lib/bin/micro
+    "$PROGDIR"/lib/bin/micro
 }
 function syncS3() {
-    $PROGDIR/lib/bin/s3
+    "$PROGDIR"/lib/bin/s3
 }
 case "$1" in
     -p|--prod|prod    )     prodInstall ;;
-    -d|--deploy|deploy )     deploy $ARGS ;;
-    -l|--local|loc    )     devInstall $ARGS ;;
-    -m|--micro|micro  )     launchMicro $ARGS ;;
-    -s|--s3|s3        )     syncS3 $ARGS ;;
-    -v|--version      )
+    -d|--deploy|deploy )     deploy "${ARGS[@]}" ;;
+    -l|--local|loc    )     devInstall "${ARGS[@]}" ;;
+    -m|--micro|micro  )     launchMicro "${ARGS[@]}" ;;
+    -s|--s3|s3        )     syncS3 "${ARGS[@]}" ;;
+    -v|--version|version )
         echo "Dependencies Versions:"
         nginx -v
         unzip -v

@@ -1,18 +1,18 @@
 #!/bin/bash
 readonly ScriptVersion="0.2"
 readonly PROGDIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
-readonly HOMEDIR=$(echo $HOME)
-readonly PROGNAME=$(basename $0)
+readonly HOMEDIR="$HOME"
+readonly PROGNAME=$(basename "$0")
 readonly LOG_FILE=$PROGDIR/../../logs/deploy.error.log
 readonly DOTFILES=$PROGDIR/../dotfiles
 readonly PATCHES=$PROGDIR/../patches
 readonly INSTALL_DIR=$PROGDIR/../install
 readonly CONFIG_DIR=$PROGDIR/../config
-readonly ARGS="$@"
+readonly ARGS=( "$@" )
 readonly GITDIR=/home/git
 readonly NGINX_DIR=/opt/nginx
 readonly g=/usr/bin/git
-exec 3>&1 1>>${LOG_FILE} 2>&1;
+exec 3>&1 1>>"${LOG_FILE}" 2>&1;
 
 function command_exists () {
     type "$1" &> /dev/null ;
@@ -64,8 +64,8 @@ function initBare() {
       #-------------------
       # Git Repository Setup
       #-------------------
-      sudo mkdir -p $git && cd $git
-      sudo $g --bare init | tee /dev/fd/3;
+      sudo mkdir -p "$git" && cd "$git"
+      sudo "$g" --bare init | tee /dev/fd/3;
   elif [[ $REPLY =~ ^[Nn]$ ]]; then
       echo -e "\ndeploy: Deployment Cancelled!" | tee /dev/fd/3;
       exit 1;
@@ -82,30 +82,30 @@ function gitAuth(){
     fi
 }
 function deployKey() {
-    sudo $g --bare fetch git@github.com:$username/$repository.git $branch:$branch | tee /dev/fd/3;
+    sudo "$g" --bare fetch git@github.com:"$username"/"$repository".git "$branch:$branch" | tee /dev/fd/3;
     provision
 }
 function httpsAuth() {
-    sudo $g --bare fetch https://github.com/$username/$repository.git $branch:$branch | tee /dev/fd/3;
+    sudo "$g" --bare fetch https://github.com/"$username"/"$repository".git "$branch:$branch" | tee /dev/fd/3;
     provision
 }
 function provision() {
-    sudo cp $scripts_dir/hooks/pre-receive.sh $git/hooks/pre-receive
-    sudo cp $scripts_dir/hooks/post-receive.sh $git/hooks/post-receive
-    sudo chmod +x $git/hooks/pre-receive
-    sudo chmod +x $git/hooks/post-receive
-    sudo cp $scripts_dir/service.sh /etc/init.d/$service_name
-    sudo chmod 0755 /etc/init.d/$service_name
-    sudo mkdir -p $work_tree
-    sudo mkdir -p $NGINX_DIR/conf/sites-enabled
+    sudo cp "$scripts_dir"/hooks/pre-receive.sh "$git"/hooks/pre-receive
+    sudo cp "$scripts_dir"/hooks/post-receive.sh "$git"/hooks/post-receive
+    sudo chmod +x "$git"/hooks/pre-receive
+    sudo chmod +x "$git"/hooks/post-receive
+    sudo cp "$scripts_dir"/service.sh /etc/init.d/"$service_name"
+    sudo chmod 0755 /etc/init.d/"$service_name"
+    sudo mkdir -p "$work_tree"
+    sudo mkdir -p "$NGINX_DIR"/conf/sites-enabled
     # Backup existing configs
-    sudo cp -r $NGINX_DIR/conf/sites-enabled $NGINX_DIR/conf/sites-enabled.backup
+    sudo cp -r "$NGINX_DIR"/conf/sites-enabled "$NGINX_DIR"/conf/sites-enabled.backup
     # Copy new nginx.config  and site-available
-    sudo cp -r $scripts_dir/sites-available/$service_name $NGINX_DIR/conf/sites-enabled/$service_name
+    sudo cp -r "$scripts_dir/sites-available/$service_name $NGINX_DIR/conf/sites-enabled/$service_name"
     sudo nginx -s stop
     sudo nginx -t | tee /dev/fd/3;
     sudo nginx
-    sudo chown -R git:git $GITDIR
+    sudo chown -R git:git "$GITDIR"
 }
 function cmdLine() {
     # SSH Keys
@@ -121,9 +121,9 @@ function cmdLine() {
 
 echo -e "Working tree will be: $work_tree on branch $branch" 1>&3;
 echo -e "Installing service $service_name, a git deployment for: github.com/$username/$repository" 1>&3;
-echo -e "Sripts and Hooks are in: "$scripts_dir 1>&3;
+echo -e "Sripts and Hooks are in: $scripts_dir" 1>&3;
 echo -e "Git Directory: $git" 1>&3;
-cmdLine $ARGS
+cmdLine "${ARGS[@]}"
 
 unset httpsAuth
 unset deployKey

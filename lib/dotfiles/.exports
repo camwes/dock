@@ -1,4 +1,6 @@
 export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PATH
+## Use gnu tools instead
+export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
 export NODE_PATH=/usr/bin/node
 export EDITOR=/usr/local/bin/emacs
 # Larger bash history (allow 32³ entries; default is 500)
