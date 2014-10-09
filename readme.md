@@ -5,7 +5,7 @@ This is not to say that the best development environment doesn't use any GUIs. M
 
 # Development Environment
 ```sh
-./dock dev
+./dock loc
 ```
 To make lives easier, the above command will do everything that you need to get your development environment from zero to supercharged in ~20-30 mins. Here's what the script does:
 
@@ -17,8 +17,8 @@ To make lives easier, the above command will do everything that you need to get 
 ## 1. Customize Your Shell
 Most linux machines use bash as the default shell, and if you've been using linux long enough it's likely that you have amassed an impressively large .bashrc (or .zshrc if you like me prefer the zsh shell) filled with aliases and enhancements to your shell environment. If you don't know what a .bashrc is then you should take the time to research how these files work and how they can make your life a lot easier. I would suggest perusing this:
 ##### [sample .zshrc](http://tldp.org/LDP/abs/html/sample-bashrc.html)
-## 2. Install Packages via Homebrew
-If you are configuring a development environment for a mac then you must install Homebrew, and it will do a lot of heavy lifting for you. If you use a window's machine then go out and buy a Mac (but seriously). Homebrew is a package managers for Mac OSX; it can install command line packages and applications and manage these installations. Homebrew has tons of [packages available](https://github.com/Homebrew/homebrew/tree/master/Library/Formula) and this repo installs a select view. They are listed in the [BrewFile](lib/bin/brew). My favorite formulas are:
+## 2. Install Binaries via Homebrew
+If you are configuring a development environment for a mac then you must install Homebrew, and it will do a lot of heavy lifting for you. If you use a window's machine then go out and buy a Mac (but seriously). Homebrew is a package managers for Mac OSX; it can install command line packages and applications and manage these installations. Homebrew has tons of [packages available](https://github.com/Homebrew/homebrew/tree/master/Library/Formula) and this repo installs a select view. They are listed in the [BrewFile](lib/bin/brew). A few of my favorite formulas are:
 * git (duh)
 * emacs (or your favorite command line text editor)
 * autojump
@@ -58,18 +58,27 @@ If you've developed for a while you probably hate the process of constantly refr
 # Production Environment
 As a developer I began making websites with zero server administration experience. I used commercial web hosting services that were both terribly interfaced and extremely limited (GoDaddy, Yahoo, etc.) As the sophistication of the things that I decided to build began to outgrow these services I decided that it was worth my time to learn to deploy a site using Amazon Web Services. Many of the webs most successful companies (Netflix, Tumblr, etc.) and most startups heavily rely on AWS, as it is very competitively priced. Unfortunately, for most front-end developers, learning to use these services is a daunting task.
 ```sh
-# install prod env
 ./dock prod
 ```
 Similar to the development script above, this script is designed to build a production environment for you. This script does many things, including but not limited to:
 * Create Users
 * Set Time Zone & Clock
 * Install Dependencies
-* Provision Server (Firewall, Nginx, Varnish)
+* Provision Server (Firewall, Nginx, Varnish, Fail2Ban)
+
+# Git Powered Deployment
+Finally I like to use git for deploying my applications:
+
 * Setting up Deploy Keys
 * Create Git Repository for Deployment
+* Creates a working tree
 
-For more details on exactly what this script does, please refer to the [aws guide](http://labs.ohm.fm/aws/)
+```sh
+./dock deploy -nohm -uohmlabs -rohm -bmaster
+```
+Referring to: -n name, -u username, -r repository, -b branch
+
+For more details on exactly what this script does, please refer to the [aws guide](http://drake.fm/devops/)
 
 #### Notes:
 * environment: Ubuntu 12.04 Server:
