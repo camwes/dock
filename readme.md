@@ -1,5 +1,5 @@
 # [Dock](https://github.com/camwes/dock)
-## Open Source Development Environment
+### Open Source Development Environment
 Writing good code starts with building a rich [development environment](https://en.wikipedia.org/wiki/development_environment) using the best tools. When I began building websites I preferred an [IDE](https://en.wikipedia.org/wiki/Integrated_development_environment) (Adobe Dreamweaver, specifically) for the out-the-box functionality. My needs soon outgrew the Dreamweaver [GUI](https://en.wikipedia.org/wiki/Graphical_user_interface) and a friend of mine convinced me that to become a better programmer I should use the command line. So, I started along the path to learning linux. Today, I'm convinced that to maximize any dev environment intermediate knowledge of Linux is a sine qua non.
 #### GUI v. CLI
 This is not to say that the best development environment doesn't use any GUIs. Many services provide excellent GUIs which provide additional benefits and advanced features. Many developers (myself included) prefer to use non-CLI text editors (textmate, webstorm, textwrangler and coda seem to be most popular). Other developers use the Github GUI, which is capable of executing most of the available git commands. To each it's own, but when making the decision between using a GUI or CLI, consider carefully how much control you will need.
