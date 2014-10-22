@@ -31,12 +31,12 @@ function syncS3() {
     "$PROGDIR"/lib/bin/s3
 }
 case "$1" in
-    -p|--prod|prod    )     prodInstall ;;
+    -p|--prod|prod     )     prodInstall ;;
     -d|--deploy|deploy )     deploy "${ARGS[@]}" ;;
-    -l|--local|loc    )     devInstall "${ARGS[@]}" ;;
-    -m|--micro|micro  )     launchMicro "${ARGS[@]}" ;;
-    -s|--s3|s3        )     syncS3 "${ARGS[@]}" ;;
-    -v|--version|version )
+    -l|--local|loc     )     devInstall "${ARGS[@]}" ;;
+    -m|--micro|micro   )     launchMicro "${ARGS[@]}" ;;
+    -s|--s3|s3         )     syncS3 "${ARGS[@]}" ;;
+    -v|--version       )
         echo "Dependencies Versions:"
         nginx -v
         unzip -v

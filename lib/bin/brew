@@ -18,6 +18,7 @@ brew install php55
 brew tap homebrew/versions
 brew install lua52
 brew tap caskroom/fonts
+brew tap caskroom/versions
 
 fonts=(
   font-m-plus
@@ -28,17 +29,20 @@ fonts=(
 
 bins=(
   zsh
+  mysql
   emacs
   git
+  reattach-to-user-namespace
   hub
+  ffmpeg
   imagemagick
   imagesnap
   geeqie
   tree
   awscli
   s3cmd
-  s3fs
   tig
+  pngquant
   tmux
   parallel
   htop
@@ -46,8 +50,10 @@ bins=(
   wget --enable-iri
   ack
   lynx
+  youtube-dl
   pigz
   rename
+  mobile-shell
   rhino
   webkit2png
   zopfli
@@ -58,6 +64,11 @@ bins=(
 apps=(
   dropbox
   google-chrome
+  google-chrome-canary
+  google-drive
+  google-hangouts
+  google-music-manager
+  google-web-designer
   chromecast
   iterm2
   textmate
@@ -66,17 +77,11 @@ apps=(
   tor-browser
   virtualbox
   vlc
-  skype
   xquartz
   rdio
   android-file-transfer
   crashlytics
   skype
-  google-drive
-  google-hangouts
-  google-music-manager
-  google-web-designer
-  googleappenginelauncher
   evernote
   divvy
   caffeine
