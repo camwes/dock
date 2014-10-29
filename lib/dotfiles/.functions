@@ -1,3 +1,7 @@
+function command_exists () {
+    type "$1" &> /dev/null ;
+}
+
 # Simple calculator
 function calc() {
 	local result=""

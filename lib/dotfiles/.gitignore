@@ -12,3 +12,34 @@ Thumbs.db
 # Files that might appear on external disks
 .Spotlight-V100
 .Trashes
+
+# emacs.d stuff
+/url/cache
+/.emacs.desktop
+/auto-save-list
+/.session
+/custom.el
+*.elc
+CVS
+.svn
+*~
+.cvsignore
+.*.lock
+/tramp
+/TODO
+/anything-c-adaptive-history
+/.org-id-locations
+cookies
+/newsticker
+/ac-comphist.dat
+\#*
+/elpa
+site-lisp/package/
+/swank
+/.mc-lists.el
+/var
+/.sqli_history
+/frame-restore-parameters
+/.achievements
+/.bookmarks.el
+/history

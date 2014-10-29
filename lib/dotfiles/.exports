@@ -3,6 +3,7 @@ export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PA
 export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
 export NODE_PATH=/usr/bin/node
 export EDITOR=/usr/local/bin/emacs
+
 # Larger bash history (allow 32³ entries; default is 500)
 export HISTSIZE=32768
 export HISTFILESIZE=$HISTSIZE
@@ -23,5 +24,5 @@ export MANPAGER="less -X"
 # Always enable colored `grep` output
 export GREP_OPTIONS="--color=auto"
 
-# Link Homebrew casks in `/Applications` rather than `~/Applications`
-export HOMEBREW_CASK_OPTS="--appdir=/Applications"
+# Specify your defaults in this environment variable
+export HOMEBREW_CASK_OPTS="--appdir=/Applications --caskroom=/opt/homebrew-cask/Caskroom"
