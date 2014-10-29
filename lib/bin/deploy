@@ -10,7 +10,7 @@ readonly INSTALL_DIR=$PROGDIR/../install
 readonly CONFIG_DIR=$PROGDIR/../config
 readonly ARGS=( "$@" )
 readonly GITDIR=/home/git
-readonly NGINX_DIR=/opt/nginx
+readonly NGINX_DIR=/etc/nginx
 readonly g=/usr/bin/git
 exec 3>&1 1>>"${LOG_FILE}" 2>&1;
 
@@ -97,11 +97,11 @@ function provision() {
     sudo cp "$scripts_dir"/service.sh /etc/init.d/"$service_name"
     sudo chmod 0755 /etc/init.d/"$service_name"
     sudo mkdir -p "$work_tree"
-    sudo mkdir -p "$NGINX_DIR"/conf/sites-enabled
     # Backup existing configs
-    sudo cp -r "$NGINX_DIR"/conf/sites-enabled "$NGINX_DIR"/conf/sites-enabled.backup
+    sudo mv "$NGINX_DIR"/sites-enabled "$NGINX_DIR"/sites-enabled.backup
+    sudo mkdir -p "$NGINX_DIR"/sites-enabled
     # Copy new nginx.config  and site-available
-    sudo cp -r "$scripts_dir/sites-available/$service_name $NGINX_DIR/conf/sites-enabled/$service_name"
+    sudo cp "$scripts_dir/sites-available/$service_name" "$NGINX_DIR/sites-enabled/$service_name"
     sudo nginx -s stop
     sudo nginx -t | tee /dev/fd/3;
     sudo nginx
