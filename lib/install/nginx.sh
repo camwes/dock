@@ -9,23 +9,23 @@ sudo apt-get install -y libpcre3
 sudo apt-get install -y zlib1g-dev
 sudo apt-get install -y zlib1g
 
-wget http://nginx.org/download/nginx-1.4.3.tar.gz
+# wget http://nginx.org/download/nginx-1.4.3.tar.gz
 # --------------------------
 # tar xvzf (.tgz or tar.gz)
 # tar xvjf (.tbz or .tar.bz2)
 # tar xvf (.tar)
 # --------------------------
-sudo tar xvf nginx-1.4.3.tar.gz
-cd nginx-1.4.3
-sudo ./configure --prefix="$NGINX_DIR"
-sudo make
-sudo make install
-sudo ln -s "$NGINX_DIR"/sbin/nginx /usr/sbin
-cd -
+# sudo tar xvf nginx-1.4.3.tar.gz
+# mv nginx-1.4.3 ${NGINX_DIR} && cd ${NGINX_DIR}
+# sudo ./configure --prefix="$NGINX_DIR"
+# sudo make
+# sudo make install
+# sudo ln -s "$NGINX_DIR"/sbin/nginx /usr/sbin
+# cd -
 # use nginx=development for latest development version
 # sudo apt-add-repository ppa:nginx/stable
 # sudo apt-get update
-# sudo apt-get install -y nginx
+sudo apt-get install -y nginx
 #-------------------
 # Install Varnish via https://www.varnish-cache.org/installation/ubuntu
 #-------------------

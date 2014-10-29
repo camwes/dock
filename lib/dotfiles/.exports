@@ -1,6 +1,8 @@
 export PATH=/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/local/share/npm/bin:$PATH
 ## Use gnu tools instead
-export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+if brew > /dev/null 2>&1; then
+  export PATH=$(brew --prefix coreutils)/libexec/gnubin:$PATH
+fi
 export NODE_PATH=/usr/bin/node
 export EDITOR=/usr/local/bin/emacs
 
