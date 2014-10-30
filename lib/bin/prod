@@ -60,8 +60,7 @@ function installStack() {
     sudo apt-get install -y tree
     sudo apt-get install -y htop
     sudo apt-get install -y unzip
-    \curl -L https://get.rvm.io | bash -s stable --ruby
-    source /home/git/.rvm/scripts/rvm
+    sudo apt-get install -y rubygems-integration    
     # Install Bundler if necessary
     if command_exists bundle; then
         echo -e "\nprod: Bundler Installed... continuing" 1>&3;
