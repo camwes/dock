@@ -87,6 +87,8 @@ alias httpdump="sudo tcpdump -i en1 -n -s 0 -w - | grep -a -o -E \"Host\: .*|GET
 alias du="du -kh"
 alias df="df -kTh"
 alias ps='ps -efm'
+# run ./dock loc
+alias up='cd ~/dock; ./dock.sh -d; cd -'
 # Get OS X Software Updates, and update installed Ruby gems, Homebrew, npm, and their installed packages
 alias update='sudo softwareupdate -i -a; brew update; brew upgrade; brew cleanup; npm update npm -g; sudo npm update -g; sudo gem update --system; sudo gem update'
 # Recursively delete `.DS_Store` files

@@ -17,7 +17,7 @@ readonly brew=/usr/local/bin/brew
 readonly npm=/usr/local/bin/npm
 
 exec 3>&1 1>>"${LOG_FILE}" 2>&1;
-
+    
 function command_exists () {
     type "$1" &> /dev/null ;
 }
@@ -37,27 +37,23 @@ function sync_dotfiles () {
   rsync --exclude ".DS_Store" --exclude "README.md" --exclude "*#" --exclude "*~" --exclude ".emacs.d/elpa/*" -av --no-perms $DOTFILES/ ~ 1>&3;
 }
 function gem_install () {
-   sudo $gem update --system 1>&3;
-   sudo $gem update 1>&3;
-  if command_exists bundle; then
-      echo -e "\nBundler Installed... continuing" 1>&3;
-  else
-      sudo $gem install bundler | tee /dev/fd/3;
-  fi
-  bundle install | tee /dev/fd/3;
+    sudo $gem update --system 1>&3;
+    $gem update 1>&3;
+    sudo $gem install bundler 1>&3;
+    bundle install | tee /dev/fd/3;
 }
 function npm_install () {
     # install node modules
-    sudo $npm cache clean 1>&3;
+    $npm cache clean 1>&3;
     $npm update $npm -g 1>&3;
-    sudo $npm update -g 1>&3;
+    $npm update -g 1>&3;
     
     function installGlobal() {
       # TODO: improve this to work all 
       if command_exists "${@}"; then
           echo -e "${@}:" $("${@}" "--version") 1>&3;
       else
-          sudo $npm install -g "${@}" | tee /dev/fd/3;
+          $npm install -g "${@}" | tee /dev/fd/3;
       fi
     }
     installGlobal bower
@@ -68,42 +64,30 @@ function npm_install () {
     installGlobal coffee-script
     $npm ls -g --depth=0 1>&3;
 }
-# OS X Software Updates
-sudo softwareupdate -i -a 1>&3;
-####################
-# Dotfiles         #
-####################
-echo -e "\nPreparing to sync Dotfiles..."  1>&3;
-echo -e "\nThis may overwrite existing files in your home directory. Are you sure? [y/n]" 1>&3;
-read -n 1;
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    sync_dotfiles
-fi
-####################
-# Homebrew         #
-####################
-if command_exists brew ; then
-    echo -e "\nBrew Installed..." 1>&3;
-else
-    install_homebrew
-fi
-echo -e " \nInstall Applications via Homebrew & Cask? [y/n] " 1>&3;
-read -n 1
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    "$PROGDIR"/brew 1>&3;
-fi
-####################
-# Npm & Gem        #
-####################
-echo -e "\nDo you want to install Gems and Npm modules? [y/n] " 1>&3;
-read -n 1
-if [[ $REPLY =~ ^[Yy]$ ]]; then
-    gem_install
-    npm_install
-fi
+function main () {
+  echo -e "\nPreparing to sync Dotfiles..."  1>&3;
+  echo -e "\nThis may overwrite existing files in your home directory." 1>&3;
+  sync_dotfiles
+  # OS X Software Updates
+  sudo softwareupdate -i -a 1>&3;
+  if command_exists brew ; then
+      echo -e "\nBrew Installed, continuing" 1>&3;
+  else
+      install_homebrew
+  fi
+  echo -e " \nInstalling apps and bins via Homebrew" 1>&3;
+  "${PROGDIR}"/brew.sh 1>&3;
+  echo -e "\nInstalling RubyGems" 1>&3;
+  gem_install
+  echo -e "\nInstalling Node Modules" 1>&3;
+  npm_install
+}
+
+main
 unset command_exists
 unset install_homebrew
 unset sync_dotfiles
 unset gem_install
 unset npm_install
+unset main
 exit 0

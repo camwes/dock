@@ -11,7 +11,7 @@ g clone git@github.com:camwes/dock.git ~
 cd ~/dock
 
 ./dock
-# will echo: Usage: dock {deploy|prod|loc|version}
+# will echo: Usage: dock {deploy|prod|dev|version}
 ```
 
 ## Localhost

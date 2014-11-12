@@ -1,3 +1,13 @@
+# Install GNU core utilities (those that come with OS X are outdated)
+# Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
+# Install Bash 4, zsh, emacs, mysql, git, php55, node, wget, curl, imagemagick, etc.
+# NOTE: Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
+
+# MYSQL: requires additional work to insure it starts at boot
+# ln -sfv /usr/local/opt/mysql/*.plist ~/Library/LaunchAgents
+# launchctl load ~/Library/LaunchAgents/homebrew.mxcl.mysql.plist
+# mysql_install_db --verbose --user=whoami --basedir="$(brew --prefix mysql)" --datadir=/usr/local/var/mysql --tmpdir=/tmp
+# mysql.server start
 readonly brew=/usr/local/bin/brew
 readonly fonts=(
   font-m-plus
@@ -22,8 +32,15 @@ readonly fonts=(
   font-old-standard-tt
   font-abril-fatface
 )
-
 readonly bins=(
+  coreutils
+  bash
+  findutils
+  homebrew/dupes/grep
+  php55
+  z
+  lua52
+  bash-completion
   zsh
   mysql
   emacs
@@ -100,7 +117,7 @@ readonly apps=(
   flip4mac
   bitcoin-core
   gpgtools
-  charles
+  charles  
 )
 
 function command_exists () {
@@ -119,27 +136,18 @@ function main () {
   
   # Install binaries
   echo -e "\nInstalling bins..."
-  # Install GNU core utilities (those that come with OS X are outdated)
-  # Don’t forget to add `$(brew --prefix coreutils)/libexec/gnubin` to `$PATH`.
-  $brew install coreutils
-  # Install GNU `find`, `locate`, `updatedb`, and `xargs`, g-prefixed
-  # Install Bash 4
-  $brew install bash
-  $brew install findutils
-  $brew install homebrew/dupes/grep
-  $brew install php55
-  $brew install lua52
+  $brew install ${bins[@]}
+  # TODO: This doesn't work as desired because the brew name and the command name differ
+  # for binary in "${bins[@]}"
+  # do
+  #   if ! command_exists $binary; then
+  #     echo -e "$binary not found, installing..."
+  #     #$brew install ${bins[@]}
+  #   else
+  #     echo -e "$binary already installed"
+  #   fi
+  # done
   
-  for binary in "${bins[@]}"
-  do
-    if ! command_exists $binary; then
-      echo -e "$binary not found, installing..."
-      #$brew install ${bins[@]}
-    else
-      echo -e "$binary already installed"
-    fi
-  done
-
   # Install apps
   echo -e "\nInstalling apps..."
   $brew cask install ${apps[@]}
@@ -147,12 +155,6 @@ function main () {
   # Install fonts
   echo -e "\nInstalling fonts..."
   $brew cask install ${fonts[@]}
-
-  if command_exists bundle; then
-      echo -e "\nBundler Installed... continuing"
-  else
-      sudo gem install bundler
-  fi
 
   # Cleanup
   $brew cleanup

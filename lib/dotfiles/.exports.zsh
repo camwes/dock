@@ -7,11 +7,17 @@ export NODE_PATH=/usr/bin/node
 export EDITOR=/usr/local/bin/emacs
 
 # Larger bash history (allow 32³ entries; default is 500)
-export HISTSIZE=32768
+export HISTSIZE=100000
 export HISTFILESIZE=$HISTSIZE
+export HISTFILE=~/.zsh_history
 export HISTCONTROL=ignoredups
 # Make some commands not show up in history
 export HISTIGNORE="ls:cd:cd -:pwd:exit:date:* --help"
+# avoid duplicates..
+export HISTCONTROL=ignoredups:erasedups
+
+# After each command, save and reload history
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Prefer US English and use UTF-8
 export LANG="en_US"
