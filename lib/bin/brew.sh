@@ -43,6 +43,7 @@ readonly bins=(
   bash-completion
   zsh
   mysql
+  mplayer
   emacs
   git
   curl
