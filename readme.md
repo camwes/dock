@@ -7,7 +7,7 @@ This is not to say that the best development environment doesn't use any GUIs. M
 > Lets just dive in! Get started by cloning the repo https://github.com/camwes/dock
 
 ```
-g clone git@github.com:camwes/dock.git ~
+git clone git@github.com:camwes/dock.git ~
 cd ~/dock
 
 ./dock
